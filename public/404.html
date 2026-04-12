@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unblocked Games G+</title>
+    <!--
+      GitHub Pages SPA Redirect — Unblocked Games G+
+      Saat user langsung akses URL dalam (contoh: /UNBLOCKGAME/#/play?id=5),
+      GitHub Pages akan serve halaman ini. Kita simpan hash ke sessionStorage
+      lalu redirect ke index.html agar router JavaScript bisa menangani navigasi.
+    -->
+    <script>
+      (function () {
+        var path = window.location.pathname;
+        var hash = window.location.hash;
+        var search = window.location.search;
+        // Simpan fragment (hash) agar dibaca ulang oleh index.html
+        if (hash) {
+          sessionStorage.setItem('gh-spa-redirect', hash.slice(1));
+        }
+        // Redirect ke root repo
+        var base = path.split('/').slice(0, 2).join('/'); // /UNBLOCKGAME
+        window.location.replace(base + '/' + (search ? search + '&' : '?') + '_=1');
+      })();
+    </script>
+  </head>
+  <body>
+    <p style="font-family:sans-serif;color:#9ca3af;background:#08051a;height:100vh;display:flex;align-items:center;justify-content:center;margin:0;">
+      Redirecting to Unblocked Games G+...
+    </p>
+  </body>
+</html>
