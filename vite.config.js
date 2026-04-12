@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // ⚙️  GitHub Pages → https://unblockgamegplus.github.io/unblockgame
-  base: '/unblockgame/',
+  // ⚙️  Root URL configuration untuk https://unblockgamegplus.github.io
+  base: '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
