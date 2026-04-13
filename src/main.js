@@ -73,7 +73,7 @@ function buildHeader() {
     <header class="top-header" role="banner">
       <div class="header-logo-wrap">
         <button class="btn-menu" id="btn-menu" aria-label="Open categories">☰</button>
-        <a href="#/" class="header-logo">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
+        <a href="/" class="header-logo" data-route="/" onclick="event.preventDefault(); window.scrollTo(0,0); document.querySelector('.header-search-icon').click();">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
       </div>
       <div class="header-search">
         <span class="header-search-icon">🔍</span>
@@ -93,6 +93,7 @@ function buildFooter() {
   return `
     <footer class="site-footer">
       <div class="footer-links">
+        <a href="/" class="route-link" data-route="/">Home</a>
         <a href="/?page=about" class="route-link" data-route="/?page=about">About Us</a>
         <a href="/?page=contact" class="route-link" data-route="/?page=contact">Contact</a>
         <a href="/?page=dmca" class="route-link" data-route="/?page=dmca">DMCA</a>
