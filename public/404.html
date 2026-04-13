@@ -11,16 +11,10 @@
     -->
     <script>
       (function () {
-        var path = window.location.pathname;
-        var hash = window.location.hash;
-        var search = window.location.search;
-        // Simpan fragment (hash) agar dibaca ulang oleh index.html
-        if (hash) {
-          sessionStorage.setItem('gh-spa-redirect', hash.slice(1));
-        }
-        // Redirect ke root repo
-        var base = path.split('/').slice(0, 2).join('/'); // /UNBLOCKGAME
-        window.location.replace(base + '/' + (search ? search + '&' : '?') + '_=1');
+        // Karena kita sudah pakai Query Parameter (?play=10)
+        // Maka file ini tak lagi diperlukan untuk menangani SPA Hash.
+        // Cukup redirect semua jalan buntu kembali ke Homepage asli.
+        window.location.replace('/' + window.location.search);
       })();
     </script>
   </head>

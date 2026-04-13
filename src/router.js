@@ -1,4 +1,4 @@
-// Simple hash-based SPA router
+// Simple query-based SPA router
 const routes = {};
 
 export function on(path, handler) {
@@ -6,38 +6,27 @@ export function on(path, handler) {
 }
 
 export function navigate(path) {
-  window.location.hash = path;
+  // path is usually something like '/' or '/?play=10'
+  // When parsing we treat the pathname part as the virtual route path
+  history.pushState(null, '', path);
+  resolve();
 }
 
 export function resolve() {
-  const hash = window.location.hash.slice(1) || '/';
-  const [base, ...rest] = hash.split('?');
-  const params = Object.fromEntries(new URLSearchParams(rest.join('?')));
-
-  if (routes[base]) {
-    routes[base](params);
-    return;
+  const params = new URLSearchParams(window.location.search);
+  
+  if (params.has('play')) {
+    // Expected format: ?play=10-impossible-tic-tac-toe
+    const playParam = params.get('play');
+    const id = playParam.split('-')[0];
+    if (routes['/play']) routes['/play']({ id });
+  } else {
+    // Normal Home
+    if (routes['/']) routes['/']({});
   }
-
-  // Try dynamic match
-  for (const [pattern, handler] of Object.entries(routes)) {
-    if (pattern.includes(':')) {
-      const regex = new RegExp('^' + pattern.replace(/:([^/]+)/g, '([^/]+)') + '$');
-      const match = base.match(regex);
-      if (match) {
-        const keys = [...pattern.matchAll(/:([^/]+)/g)].map(m => m[1]);
-        const dynamicParams = Object.fromEntries(keys.map((k, i) => [k, match[i + 1]]));
-        handler({ ...params, ...dynamicParams });
-        return;
-      }
-    }
-  }
-
-  // 404 fallback → home
-  if (routes['/']) routes['/']({});
 }
 
 export function init() {
-  window.addEventListener('hashchange', resolve);
+  window.addEventListener('popstate', resolve);
   resolve();
 }

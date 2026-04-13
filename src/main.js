@@ -355,7 +355,10 @@ function renderHome() {
   renderGames();
 }
 
-// ──── Render Games ─────────────────────────────────────────
+function getSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
 function renderGames() {
   const filtered = getFiltered();
   const grid = $('games-grid');
@@ -395,8 +398,9 @@ function renderGames() {
     const catArr = Array.isArray(g.cat) ? g.cat : [g.cat];
     const primaryCat = catArr[0] || '';
     const icon = CAT_ICONS[primaryCat] || '🎮';
+    const playSlug = getSlug(g.title);
     return `
-      <article class="game-card" data-id="${g.id}" style="animation-delay:${Math.min(i, 30) * 20}ms" tabindex="0" role="button" aria-label="Play ${g.title}">
+      <article class="game-card" data-id="${g.id}" data-slug="${playSlug}" style="animation-delay:${Math.min(i, 30) * 20}ms" tabindex="0" role="button" aria-label="Play ${g.title}">
         <div class="card-thumb">
           <img
             src="${getThumbUrl(g)}"
@@ -419,7 +423,7 @@ function renderGames() {
   if (loadWrap) loadWrap.style.display = filtered.length > visibleCount ? 'flex' : 'none';
 
   grid.querySelectorAll('.game-card').forEach(card => {
-    const play = () => navigate(`/play?id=${card.dataset.id}`);
+    const play = () => navigate(`/?play=${card.dataset.id}-${card.dataset.slug}`);
     card.addEventListener('click', play);
     card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') play(); });
   });
@@ -546,7 +550,10 @@ function renderPlay({ id }) {
   `;
 
   $('game-frame')?.addEventListener('load', () => { $('game-loading').style.display = 'none'; });
-  $('btn-back')?.addEventListener('click', () => { window.history.back(); });
+  $('btn-back')?.addEventListener('click', () => {
+    navigate('/');
+  });
+
   $('btn-fullscreen')?.addEventListener('click', () => {
     const c = $('game-container');
     document.fullscreenElement ? document.exitFullscreen() : c?.requestFullscreen();
@@ -567,7 +574,7 @@ function renderPlay({ id }) {
     navigate('/');
   });
   document.getElementById('related-grid')?.querySelectorAll('.game-card').forEach(card => {
-    const play = () => { visibleCount = 60; navigate(`/play?id=${card.dataset.id}`); };
+    const play = () => { visibleCount = 60; navigate(`/?play=${card.dataset.id}-${card.dataset.slug}`); };
     card.addEventListener('click', play);
     card.addEventListener('keydown', e => { if (e.key === 'Enter') play(); });
   });

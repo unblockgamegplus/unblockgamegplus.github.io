@@ -4,46 +4,88 @@ import path from 'path';
 // URL Root
 const baseUrl = 'https://unblockgamegplus.github.io';
 const gamesJsonPath = path.resolve('public/games.json');
-const sitemapPath = path.resolve('public/sitemap.xml');
+
+function getSlug(title) {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+// 5 Core Categories Buckets
+// We will distribute the games into these buckets.
+const buckets = {
+  'action': [],
+  'racing': [],
+  'shooting': [],
+  'puzzle': [],
+  'other': []
+};
 
 try {
   // 1. Baca data games.json
   const rawData = fs.readFileSync(gamesJsonPath, 'utf-8');
   const games = JSON.parse(rawData);
 
-  // 2. Buat header XML
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Homepage -->
-  <url>
-    <loc>${baseUrl}/</loc>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-`;
+  // 2. Bagi ke dalam bucket kategori
+  games.forEach(game => {
+    const cats = Array.isArray(game.cat) ? game.cat : [game.cat];
+    const catStr = cats.map(c => c.toLowerCase()).join(' ');
 
-  // 3. Looping semua game
-  games.forEach((game) => {
-    // Karena menggunakan SPA Hash Routing:
-    const gameUrl = `${baseUrl}/#/play?id=${game.id}`;
-    
-    // Ganti karakter khusus XML pada URL kalau diperlukan (misalnya & jadi &amp; walau id harusnya aman)
-    const safeUrl = gameUrl.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    
-    xml += `  <url>
-    <loc>${safeUrl}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>\n`;
+    if (catStr.includes('action') || catStr.includes('fighting') || catStr.includes('adventure')) {
+      buckets['action'].push(game);
+    } else if (catStr.includes('racing') || catStr.includes('driving') || catStr.includes('moto')) {
+      buckets['racing'].push(game);
+    } else if (catStr.includes('shoot') || catStr.includes('gun')) {
+      buckets['shooting'].push(game);
+    } else if (catStr.includes('puzzle') || catStr.includes('board') || catStr.includes('math')) {
+      buckets['puzzle'].push(game);
+    } else {
+      buckets['other'].push(game);
+    }
   });
 
-  // 4. Tutup XML
-  xml += `</urlset>`;
+  // 3. Helper untuk menulis sitemap XML
+  const generateSitemapFile = (filename, gameList) => {
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+    
+    // Khusus sitemap pertama, isikan homepage URL
+    if (filename === 'sitemap-action.xml') {
+      xml += `  <url>\n    <loc>${baseUrl}/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+    }
 
-  // 5. Simpan file
-  fs.writeFileSync(sitemapPath, xml);
-  console.log(`✅ Sukses! Sitemap.xml berhasil di-generate. Total URl: ${games.length + 1}`);
+    gameList.forEach(game => {
+      // Query param URL dengan keyword slug
+      const gameUrl = `${baseUrl}/?play=${game.id}-${getSlug(game.title)}`;
+      const safeUrl = gameUrl.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      
+      xml += `  <url>\n    <loc>${safeUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
+    });
+
+    xml += `</urlset>`;
+    fs.writeFileSync(path.resolve(`public/${filename}`), xml);
+    console.log(`✅ File ${filename} digenerate dengan ${gameList.length} URL.`);
+  };
+
+  // 4. Proses masing-masing bucket
+  const sitemapFiles = [];
+  for (const [bucketName, gameList] of Object.entries(buckets)) {
+    if (gameList.length > 0) {
+      const filename = `sitemap-${bucketName}.xml`;
+      generateSitemapFile(filename, gameList);
+      sitemapFiles.push(filename);
+    }
+  }
+
+  // 5. Generate Sitemap Index (.xml induk)
+  let indexXml = `<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+  const today = new Date().toISOString().split('T')[0];
+
+  sitemapFiles.forEach(file => {
+    indexXml += `  <sitemap>\n    <loc>${baseUrl}/${file}</loc>\n    <lastmod>${today}</lastmod>\n  </sitemap>\n`;
+  });
+  indexXml += `</sitemapindex>`;
   
+  fs.writeFileSync(path.resolve('public/sitemap.xml'), indexXml);
+  console.log(`✅ INDUK Sitemap Index (sitemap.xml) berhasil digenerate menunjuk ke ${sitemapFiles.length} file sitemap anakan!`);
+
 } catch (error) {
   console.error("Gagal generate sitemap:", error.message);
 }
