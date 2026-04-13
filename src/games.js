@@ -3,7 +3,9 @@
 // Thumbnail: https://unblocked-games-g-plus.bitbucket.io/images/games/class-{id}.webp
 
 export function getGameUrl(game) {
-  return `https://splenedu52.github.io/g50/class-${game.id}/`;
+  // Gunakan URL yang sudah diupdate (inkyedu118) dari games.json
+  // Fallback ke pola g50 jika string gameUrl tidak tersedia
+  return game.gameUrl || `https://inkyedu118.github.io/g50/class-${game.id}/`;
 }
 
 export function getThumbUrl(game) {
