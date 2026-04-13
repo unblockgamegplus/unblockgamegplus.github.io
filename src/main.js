@@ -73,7 +73,7 @@ function buildHeader() {
     <header class="top-header" role="banner">
       <div class="header-logo-wrap">
         <button class="btn-menu" id="btn-menu" aria-label="Open categories">☰</button>
-        <a href="/" class="header-logo" data-route="/" onclick="event.preventDefault(); window.scrollTo(0,0); document.querySelector('.header-search-icon').click();">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
+        <a href="/" class="header-logo route-link" data-route="/">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
       </div>
       <div class="header-search">
         <span class="header-search-icon">🔍</span>
