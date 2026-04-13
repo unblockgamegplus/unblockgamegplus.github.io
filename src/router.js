@@ -20,6 +20,10 @@ export function resolve() {
     const playParam = params.get('play');
     const id = playParam.split('-')[0];
     if (routes['/play']) routes['/play']({ id });
+  } else if (params.has('page')) {
+    // Expected format: ?page=contact
+    const pageId = params.get('page');
+    if (routes['/page']) routes['/page']({ id: pageId });
   } else {
     // Normal Home
     if (routes['/']) routes['/']({});

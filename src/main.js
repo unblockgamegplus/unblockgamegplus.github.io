@@ -1,6 +1,7 @@
 import './style.css';
 import { CATEGORIES, CAT_ICONS, getGameUrl, getThumbUrl } from './games.js';
 import { on, navigate, init as initRouter } from './router.js';
+import { STATIC_PAGES } from './staticPages.js';
 
 // ──── Ads ──────────────────────────────────────────────────
 const AD_TOP = '72aae8a75da17a34e48ed84feaa311bf';
@@ -85,6 +86,35 @@ function buildHeader() {
       </div>
     </header>
   `;
+}
+
+// ──── Footer HTML ──────────────────────────────────────────
+function buildFooter() {
+  return `
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="/?page=about" class="route-link" data-route="/?page=about">About Us</a>
+        <a href="/?page=contact" class="route-link" data-route="/?page=contact">Contact</a>
+        <a href="/?page=dmca" class="route-link" data-route="/?page=dmca">DMCA</a>
+        <a href="/?page=tos" class="route-link" data-route="/?page=tos">Terms of Service</a>
+        <a href="/?page=privacy" class="route-link" data-route="/?page=privacy">Privacy Policy</a>
+      </div>
+      <div class="footer-copy">
+        &copy; ${new Date().getFullYear()} Unblocked Games G+. All rights reserved.
+      </div>
+    </footer>
+  `;
+}
+
+// ──── Bind Route Links ─────────────────────────────────────
+function bindRouteLinks() {
+  document.querySelectorAll('.route-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      navigate(link.getAttribute('data-route'));
+      window.scrollTo(0, 0);
+    });
+  });
 }
 
 // ──── SEO Content Helpers ───────────────────────────────────────
@@ -336,6 +366,7 @@ function renderHome() {
 
         ${getAdHTML(AD_BOTTOM)}
         ${buildHomeSeoBlock()}
+        ${buildFooter()}
       </div>
     </div>
   `;
@@ -352,6 +383,7 @@ function renderHome() {
   });
 
   bindHomeEvents();
+  bindRouteLinks();
   renderGames();
 }
 
@@ -578,11 +610,43 @@ function renderPlay({ id }) {
     card.addEventListener('click', play);
     card.addEventListener('keydown', e => { if (e.key === 'Enter') play(); });
   });
+
+  bindRouteLinks();
+}
+
+// ──── Static Page ────────────────────────────────────────────
+function renderStaticPage({ id }) {
+  const page = STATIC_PAGES[id];
+  if (!page) { navigate('/'); return; }
+
+  document.title = `${page.title} | Unblocked Games G+`;
+
+  let metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.content = `Read our ${page.title} policy at Unblocked Games G+.`;
+
+  $('app').innerHTML = `
+    ${buildHeader()}
+    <div class="layout">
+      ${buildSidebar()}
+      <div class="main-content">
+        <div class="static-page-container">
+          <div class="static-card">
+            ${page.content}
+          </div>
+        </div>
+        ${buildFooter()}
+      </div>
+    </div>
+  `;
+
+  bindHomeEvents();
+  bindRouteLinks();
 }
 
 // ──── Routes ───────────────────────────────────────────────
 on('/', () => renderHome());
 on('/play', ({ id }) => renderPlay({ id }));
+on('/page', ({ id }) => renderStaticPage({ id }));
 
 // ──── Boot ─────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
