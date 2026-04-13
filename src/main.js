@@ -304,19 +304,17 @@ function buildHomeSeoBlock() {
       </div>
     </div>
 
-    <div class="home-seo-categories">
-      <h3>Popular Game Categories on Unblocked Games G+</h3>
-      <div class="home-seo-cat-grid">
-        ${CATEGORIES.filter(c => c.id !== 'all').slice(0, 12).map(c => {
-          const count = getCatCount(c.id);
-          return `<a href="#/" class="home-cat-chip" data-cat="${c.id}" id="seo-cat-${c.id}">
-            <span>${c.emoji}</span>
-            <span>${c.shortLabel}</span>
-            <span class="chip-count">${count}</span>
-          </a>`;
-        }).join('')}
+      <div class="home-seo-categories">
+        <h3>Popular Categories</h3>
+        <div class="home-cat-chips">
+          ${CATEGORIES.filter(c => c.id !== 'all').slice(0, 12).map(c => {
+            const count = getCatCount(c.id);
+            return `<a href="/?search=${c.id}" class="home-cat-chip route-link" data-route="/?search=${c.id}" data-cat="${c.id}" id="seo-cat-${c.id}">
+              <span class="cat-icon">${c.emoji}</span> ${c.label} <small>(${count})</small>
+            </a>`;
+          }).join('')}
+        </div>
       </div>
-    </div>
 
     <div class="home-seo-faq">
       <h3>Frequently Asked Questions</h3>

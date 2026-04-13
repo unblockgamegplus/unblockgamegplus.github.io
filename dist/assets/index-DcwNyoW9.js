@@ -227,16 +227,14 @@
       </div>
     </div>
 
-    <div class="home-seo-categories">
-      <h3>Popular Game Categories on Unblocked Games G+</h3>
-      <div class="home-seo-cat-grid">
-        ${r.filter(e=>e.id!==`all`).slice(0,12).map(e=>{let t=y(e.id);return`<a href="#/" class="home-cat-chip" data-cat="${e.id}" id="seo-cat-${e.id}">
-            <span>${e.emoji}</span>
-            <span>${e.shortLabel}</span>
-            <span class="chip-count">${t}</span>
-          </a>`}).join(``)}
+      <div class="home-seo-categories">
+        <h3>Popular Categories</h3>
+        <div class="home-cat-chips">
+          ${r.filter(e=>e.id!==`all`).slice(0,12).map(e=>{let t=y(e.id);return`<a href="/?search=${e.id}" class="home-cat-chip route-link" data-route="/?search=${e.id}" data-cat="${e.id}" id="seo-cat-${e.id}">
+              <span class="cat-icon">${e.emoji}</span> ${e.label} <small>(${t})</small>
+            </a>`}).join(``)}
+        </div>
       </div>
-    </div>
 
     <div class="home-seo-faq">
       <h3>Frequently Asked Questions</h3>
