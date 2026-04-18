@@ -387,7 +387,11 @@ function renderHome() {
 }
 
 function getSlug(title) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  return title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special chars except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .replace(/(^-|-$)/g, ''); // Trim leading/trailing hyphens
 }
 
 function renderGames() {
@@ -454,7 +458,10 @@ function renderGames() {
   if (loadWrap) loadWrap.style.display = filtered.length > visibleCount ? 'flex' : 'none';
 
   grid.querySelectorAll('.game-card').forEach(card => {
-    const play = () => navigate(`/?play=${card.dataset.id}-${card.dataset.slug}`);
+    const play = () => {
+      const slug = card.dataset.slug;
+      window.location.href = `/game/${slug}.html`;
+    };
     card.addEventListener('click', play);
     card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') play(); });
   });
@@ -605,7 +612,10 @@ function renderPlay({ id }) {
     navigate('/');
   });
   document.getElementById('related-grid')?.querySelectorAll('.game-card').forEach(card => {
-    const play = () => { visibleCount = 60; navigate(`/?play=${card.dataset.id}-${card.dataset.slug}`); };
+    const play = () => {
+      const slug = card.dataset.slug;
+      window.location.href = `/game/${slug}.html`;
+    };
     card.addEventListener('click', play);
     card.addEventListener('keydown', e => { if (e.key === 'Enter') play(); });
   });

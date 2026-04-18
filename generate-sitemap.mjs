@@ -52,8 +52,9 @@ try {
     }
 
     gameList.forEach(game => {
-      // Query param URL dengan keyword slug
-      const gameUrl = `${baseUrl}/?play=${game.id}-${getSlug(game.title)}`;
+      // Static HTML page URL
+      const slug = getSlug(game.title);
+      const gameUrl = `${baseUrl}/game/${slug}.html`;
       const safeUrl = gameUrl.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
       
       xml += `  <url>\n    <loc>${safeUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
