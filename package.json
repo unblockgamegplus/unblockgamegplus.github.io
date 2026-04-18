@@ -9,6 +9,7 @@
     "prebuild": "node generate-game-pages-github.mjs && node generate-sitemap-github.mjs",
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "node sync-root-from-dist.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {
