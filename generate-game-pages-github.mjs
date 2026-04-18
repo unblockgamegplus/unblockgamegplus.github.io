@@ -58,6 +58,33 @@ const CAT_DESC = {
   Stickman: 'hilarious and action-packed stickman fighting and adventure games',
 };
 
+const CATEGORIES = [
+  { id: 'all', emoji: '🎮', label: 'All Games' },
+  { id: 'Popular', emoji: '⭐', label: 'Popular' },
+  { id: 'New', emoji: '🆕', label: 'New' },
+  { id: 'Skill', emoji: '🎯', label: 'Skill' },
+  { id: 'Running', emoji: '🏃', label: 'Running' },
+  { id: 'Adventure', emoji: '🗺️', label: 'Adventure' },
+  { id: 'Platform', emoji: '🟪', label: 'Platform' },
+  { id: 'Car', emoji: '🚗', label: 'Car' },
+  { id: 'Racing', emoji: '🏁', label: 'Racing' },
+  { id: 'Moto', emoji: '🏍️', label: 'Moto' },
+  { id: '3D', emoji: '🧊', label: '3D' },
+  { id: 'Shooting', emoji: '🔫', label: 'Shooting' },
+  { id: 'Multiplayer', emoji: '🌍', label: 'Multiplayer' },
+  { id: '2 Player', emoji: '👥', label: '2 Player' },
+  { id: 'Sports', emoji: '⚽', label: 'Sports' },
+  { id: 'Puzzle', emoji: '🧩', label: 'Puzzle' },
+  { id: 'Animal', emoji: '🐾', label: 'Animal' },
+  { id: 'Stickman', emoji: '🕴️', label: 'Stickman' },
+  { id: 'Simulation', emoji: '🕹️', label: 'Simulation' },
+  { id: 'Management', emoji: '📈', label: 'Management' },
+  { id: 'Survival', emoji: '🔥', label: 'Survival' },
+  { id: 'Strategy', emoji: '♟️', label: 'Strategy' },
+  { id: 'Board', emoji: '🎲', label: 'Board' },
+  { id: 'Girls', emoji: '✨', label: 'Girls' },
+];
+
 function createSlug(title) {
   return title.toLowerCase()
     .replace(/[^a-z0-9\s-]/g, '')
@@ -83,6 +110,36 @@ function getAdHTML(key) {
   const srcdoc = `<!DOCTYPE html><html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;overflow:hidden;}</style></head><body><script>window.atOptions={key:'${key}',format:'iframe',height:90,width:728,params:{}};</script><script src="https://biggerbreakerfind.com/${key}/invoke.js"></script></body></html>`
     .replace(/"/g, '&quot;');
   return `<div class="ad-banner"><iframe srcdoc="${srcdoc}" width="728" height="90" frameborder="0" scrolling="no" style="display:block;margin:0;padding:0;border:none;"></iframe></div>`;
+}
+
+function getCategoryCount(categoryId) {
+  if (categoryId === 'all') return games.length;
+  return games.filter(game => {
+    const cats = Array.isArray(game.cat) ? game.cat : [game.cat];
+    return cats.includes(categoryId);
+  }).length;
+}
+
+function buildSidebar(activeCategory) {
+  const links = CATEGORIES.map(category => {
+    const count = getCategoryCount(category.id);
+    if (count === 0 && category.id !== 'all') return '';
+    const href = category.id === 'all' ? '/all-games.html' : '/all-games.html';
+    const active = activeCategory === category.id ? 'active' : '';
+    return `
+      <a class="cat-item ${active}" href="${href}">
+        <span class="cat-icon">${category.emoji}</span>
+        <span>${escapeHtml(category.label)}</span>
+        <span class="cat-count">${count}</span>
+      </a>`;
+  }).join('');
+
+  return `
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Game categories">
+      <div class="sidebar-section-label">Categories</div>
+      ${links}
+    </aside>
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>`;
 }
 
 function buildGameSeoContent(game, cats) {
@@ -291,16 +348,46 @@ function generateGamePage(game, allGames) {
     img { display:block; max-width:100%; }
     button { font:inherit; }
     .top-header {
-      position:sticky; top:0; z-index:20; height:56px; display:flex; align-items:center; justify-content:space-between; gap:16px;
+      position:fixed; top:0; left:0; right:0; z-index:200; height:56px; display:flex; align-items:center; justify-content:space-between; gap:16px;
       padding:0 20px; background:rgba(8,5,26,0.85); backdrop-filter:blur(12px); border-bottom:1px solid rgba(255,255,255,0.04);
     }
+    .header-logo-wrap { display:flex; align-items:center; gap:12px; flex:1; }
     .header-logo { font-size:1.25rem; font-weight:800; letter-spacing:-0.5px; }
     .header-logo .g { color:var(--purple); }
     .header-logo .gplus { color:var(--cyan); font-size:0.85em; font-weight:900; margin-left:2px; }
     .header-links { display:flex; align-items:center; gap:14px; font-size:0.9rem; color:var(--text2); }
     .header-links a:hover { color:var(--text); }
-    .shell { max-width:1240px; margin:0 auto; padding:16px 16px 40px; }
+    .layout { display:flex; min-height:100vh; }
+    .sidebar {
+      position:fixed; top:56px; left:0; bottom:0; width:220px; background:var(--bg2); border-right:1px solid var(--border);
+      overflow-y:auto; overflow-x:hidden; z-index:100; padding:12px 8px 24px; scrollbar-width:thin; scrollbar-color:var(--border) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width:4px; }
+    .sidebar::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+    .sidebar-section-label {
+      font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; color:var(--text3); padding:10px 12px 4px;
+    }
+    .cat-item {
+      display:flex; align-items:center; gap:10px; width:100%; padding:9px 12px; border-radius:10px; font-size:0.875rem; font-weight:500;
+      color:var(--text2); transition:background 0.15s, color 0.15s; text-align:left;
+    }
+    .cat-item:hover { background:var(--surface2); color:var(--text); }
+    .cat-item.active {
+      background:linear-gradient(135deg, rgba(139,92,246,0.25), rgba(109,40,217,0.15)); color:var(--purple); border:1px solid var(--border2);
+    }
+    .cat-icon { font-size:1rem; min-width:22px; text-align:center; }
+    .cat-count { margin-left:auto; font-size:0.7rem; color:var(--text3); background:var(--surface2); padding:1px 6px; border-radius:999px; }
+    .sidebar-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:150; backdrop-filter:blur(2px);
+    }
+    .sidebar-overlay.open { display:block; }
+    .main-content { margin-left:220px; margin-top:56px; padding:16px 16px 40px; flex:1; min-width:0; }
+    .shell { max-width:1240px; margin:0 auto; }
     .play-page { display:flex; flex-direction:column; gap:0; }
+    .btn-menu {
+      display:none; align-items:center; justify-content:center; width:36px; height:36px; background:var(--surface2); border:1px solid var(--border);
+      border-radius:8px; color:var(--text); font-size:18px; flex-shrink:0; cursor:pointer;
+    }
     .play-header {
       display:flex; align-items:center; gap:12px; padding:14px 20px; background:linear-gradient(to right, var(--bg2), var(--bg3));
       border:1px solid var(--border); border-radius:var(--radius-lg); margin-bottom:12px; flex-wrap:wrap;
@@ -423,7 +510,8 @@ function generateGamePage(game, allGames) {
     @media (max-width: 780px) {
       .top-header { padding:0 12px; }
       .header-links { gap:10px; font-size:0.82rem; }
-      .shell { padding:12px 12px 28px; }
+      .sidebar { width:190px; }
+      .main-content { margin-left:190px; }
       .game-container { min-height:240px; }
       .hero-thumb { flex-direction:column; align-items:flex-start; }
       .hero-thumb img { width:100%; max-width:260px; }
@@ -431,6 +519,10 @@ function generateGamePage(game, allGames) {
       .play-game-title { white-space:normal; }
     }
     @media (max-width: 560px) {
+      .btn-menu { display:flex; }
+      .sidebar { left:-240px; width:240px; transition:left 0.3s ease; z-index:300; }
+      .sidebar.open { left:0; }
+      .main-content { margin-left:0; padding:12px 12px 32px; }
       .play-header { padding:12px; }
       .btn-back, .btn-fullscreen { width:100%; justify-content:center; }
       .header-links { display:none; }
@@ -441,16 +533,22 @@ function generateGamePage(game, allGames) {
 </head>
 <body>
   <header class="top-header">
-    <a href="/" class="header-logo">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
+    <div class="header-logo-wrap">
+      <button class="btn-menu" id="btn-menu" type="button" aria-label="Open categories">☰</button>
+      <a href="/" class="header-logo">Unblocked<span class="g">Games</span><span class="gplus">G+</span></a>
+    </div>
     <nav class="header-links">
       <a href="/">Home</a>
       <a href="/all-games.html">All Games</a>
     </nav>
   </header>
 
-  <main class="shell">
-    ${getAdHTML(AD_TOP)}
-    <div class="play-page">
+  <div class="layout">
+    ${buildSidebar(primaryCat)}
+    <main class="main-content">
+    <div class="shell">
+      ${getAdHTML(AD_TOP)}
+      <div class="play-page">
       <div class="play-header">
         <a class="btn-back" href="/">← Back</a>
         <div class="play-info">
@@ -508,7 +606,9 @@ ${relatedCards}
       </div>
       <div>&copy; ${new Date().getFullYear()} Unblocked Games G+. All rights reserved.</div>
     </footer>
-  </main>
+    </div>
+    </main>
+  </div>
 
   <script>
     (function () {
@@ -516,6 +616,9 @@ ${relatedCards}
       var loading = document.getElementById('game-loading');
       var fullscreen = document.getElementById('btn-fullscreen');
       var container = document.getElementById('game-container');
+      var menu = document.getElementById('btn-menu');
+      var sidebar = document.getElementById('sidebar');
+      var overlay = document.getElementById('sidebar-overlay');
 
       function hideLoading() {
         if (loading) {
@@ -537,6 +640,17 @@ ${relatedCards}
           } else if (container.requestFullscreen) {
             container.requestFullscreen();
           }
+        });
+      }
+
+      if (menu && sidebar && overlay) {
+        menu.addEventListener('click', function () {
+          sidebar.classList.toggle('open');
+          overlay.classList.toggle('open');
+        });
+        overlay.addEventListener('click', function () {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('open');
         });
       }
     })();
