@@ -78,13 +78,20 @@
     }
     .game-container iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
     .game-loading {
-      position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; background:var(--bg);
+      position:absolute; inset:0; z-index:10; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; background:rgba(8,5,26,0.94);
+      transition:opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .game-loading.is-hidden {
+      opacity:0; visibility:hidden; pointer-events:none;
     }
     .spinner {
       width:48px; height:48px; border:4px solid rgba(139,92,246,0.2); border-top-color:var(--purple); border-radius:50%; animation:spin 0.8s linear infinite;
     }
     .game-loading p { margin:0; color:var(--text2); font-size:0.95rem; }
     .game-loading strong { color:var(--purple); }
+    .loading-note {
+      font-size:0.82rem; color:var(--text3); text-align:center; max-width:320px; line-height:1.5;
+    }
     .hero-thumb {
       margin:18px 0 0; display:flex; align-items:center; gap:16px; padding:14px; background:var(--surface); border:1px solid var(--border);
       border-radius:var(--radius-lg);
@@ -203,6 +210,7 @@
         <div class="game-loading" id="game-loading">
           <div class="spinner"></div>
           <p>Loading <strong>Darts Pro</strong>...</p>
+          <div class="loading-note">If the game server is slow, the loading screen will close automatically in a few seconds.</div>
         </div>
         <iframe
           id="game-frame"
@@ -404,10 +412,17 @@
       var fullscreen = document.getElementById('btn-fullscreen');
       var container = document.getElementById('game-container');
 
+      function hideLoading() {
+        if (loading) {
+          loading.classList.add('is-hidden');
+        }
+      }
+
       if (frame && loading) {
         frame.addEventListener('load', function () {
-          loading.style.display = 'none';
+          hideLoading();
         });
+        window.setTimeout(hideLoading, 3500);
       }
 
       if (fullscreen && container) {
