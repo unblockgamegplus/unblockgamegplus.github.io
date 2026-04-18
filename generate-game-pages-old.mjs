@@ -1,31 +1,54 @@
-<!DOCTYPE html>
+import fs from 'fs';
+import path from 'path';
+
+const games = JSON.parse(fs.readFileSync('public/games.json', 'utf8'));
+
+// Function to create slug from title
+function createSlug(title) {
+  return title.toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // Remove special chars except spaces and hyphens
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single
+    .trim();
+}
+
+// Template for game page
+function generateGamePage(game) {
+  const slug = createSlug(game.title);
+  const categories = Array.isArray(game.cat) ? game.cat.join(', ') : game.cat;
+  const title = `${game.title} - Unblocked Games G+`;
+  const description = `Play ${game.title} unblocked online for free. No download required. ${categories} game.`;
+  const url = `https://unblockgamegplus.github.io/game/${slug}.html`;
+  const gameUrl = game.gameUrl;
+
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Primary SEO -->
-  <title>Stickman School Run - Unblocked Games G+</title>
-  <meta name="description" content="Play Stickman School Run unblocked online for free. No download required. Running, Stickman, Sports game. Enjoy this exciting running, stickman, sports game directly in your browser with no downloads or installations required.">
-  <meta name="keywords" content="unblocked games, stickman school run, running, stickman, sports, free online games, no download games">
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <meta name="keywords" content="unblocked games, ${game.title.toLowerCase()}, ${categories.toLowerCase()}, free online games, no download games">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Unblocked Games G+">
 
   <!-- Canonical -->
-  <link rel="canonical" href="https://unblockgamegplus.github.io/game/stickman-school-run.html">
+  <link rel="canonical" href="${url}">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://unblockgamegplus.github.io/game/stickman-school-run.html">
-  <meta property="og:title" content="Stickman School Run - Unblocked Games G+">
-  <meta property="og:description" content="Play Stickman School Run unblocked online for free. No download required. Running, Stickman, Sports game. Enjoy this exciting running, stickman, sports game directly in your browser with no downloads or installations required.">
-  <meta property="og:image" content="https://unblocked-games-g-plus.bitbucket.io/img/class-693.png">
+  <meta property="og:url" content="${url}">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:image" content="${game.thumb}">
   <meta property="og:site_name" content="Unblocked Games G+">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Stickman School Run - Unblocked Games G+">
-  <meta name="twitter:description" content="Play Stickman School Run unblocked online for free. No download required. Running, Stickman, Sports game. Enjoy this exciting running, stickman, sports game directly in your browser with no downloads or installations required.">
+  <meta name="twitter:title" content="${title}">
+  <meta name="twitter:description" content="${description}">
 
   <meta name="theme-color" content="#7c3aed">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
@@ -35,11 +58,11 @@
   {
     "@context": "https://schema.org",
     "@type": "Game",
-    "name": "Stickman School Run",
-    "description": "Play Stickman School Run unblocked online for free. No download required. Running, Stickman, Sports game. Enjoy this exciting running, stickman, sports game directly in your browser with no downloads or installations required.",
-    "url": "https://unblockgamegplus.github.io/game/stickman-school-run.html",
-    "image": "https://unblocked-games-g-plus.bitbucket.io/img/class-693.png",
-    "genre": "Running, Stickman, Sports",
+    "name": "${game.title}",
+    "description": "${description}",
+    "url": "${url}",
+    "image": "${game.thumb}",
+    "genre": "${categories}",
     "publisher": {
       "@type": "Organization",
       "name": "Unblocked Games G+"
@@ -63,34 +86,16 @@
     }
     .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
     .game-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
       color: #8b5cf6;
       margin-bottom: 10px;
     }
     .game-meta {
       color: #9ca3af;
       margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-    .game-description {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 30px;
-      text-align: center;
-      color: #d1d5db;
-    }
-    .game-thumbnail {
-      display: block;
-      max-width: 300px;
-      height: auto;
-      margin: 0 auto 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .game-iframe {
       width: 100%;
@@ -100,27 +105,21 @@
     }
     .back-link {
       display: inline-block;
-      margin-top: 30px;
+      margin-top: 20px;
       color: #8b5cf6;
       text-decoration: none;
-      font-size: 1.1rem;
-      padding: 10px 20px;
-      border: 1px solid #8b5cf6;
-      border-radius: 8px;
-      transition: all 0.3s ease;
     }
     .back-link:hover {
-      background: #8b5cf6;
-      color: white;
+      text-decoration: underline;
     }
     .ad-banner {
       display: flex;
       justify-content: center;
-      margin: 20px 0;
+      margin: 16px 0;
       background: rgba(255,255,255,0.02);
       border: 1px dashed rgba(255,255,255,0.05);
       border-radius: 12px;
-      padding: 10px 0;
+      padding: 8px 0;
       width: 100%;
       overflow: hidden;
     }
@@ -129,27 +128,21 @@
 <body>
   <div class="container">
     <div class="header">
-      <img src="https://unblocked-games-g-plus.bitbucket.io/img/class-693.png" alt="Stickman School Run" class="game-thumbnail" loading="lazy">
-      <h1 class="game-title">Stickman School Run</h1>
-      <div class="game-meta">Categories: Running, Stickman, Sports</div>
-      <div class="game-description">
-        Play Stickman School Run unblocked online for free. No download required. Running, Stickman, Sports game. Enjoy this exciting running, stickman, sports game directly in your browser with no downloads or installations required.
-      </div>
+      <h1 class="game-title">${game.title}</h1>
+      <div class="game-meta">Categories: ${categories}</div>
     </div>
 
     <div class="ad-banner">
       <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;overflow:hidden;}</style></head><body><script>window.atOptions={key:'72aae8a75da17a34e48ed84feaa311bf',format:'iframe',height:90,width:728,params:{}};</script><script src='https://biggerbreakerfind.com/72aae8a75da17a34e48ed84feaa311bf/invoke.js'></script></body></html>" width="728" height="90" frameborder="0" scrolling="no"></iframe>
     </div>
 
-    <iframe src="https://inkyedu118.github.io/g69/class-693" class="game-iframe" allowfullscreen></iframe>
+    <iframe src="${gameUrl}" class="game-iframe" allowfullscreen></iframe>
 
     <div class="ad-banner">
       <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;overflow:hidden;}</style></head><body><script>window.atOptions={key:'4b03159602cba0243869c415124b923e',format:'iframe',height:90,width:728,params:{}};</script><script src='https://biggerbreakerfind.com/4b03159602cba0243869c415124b923e/invoke.js'></script></body></html>" width="728" height="90" frameborder="0" scrolling="no"></iframe>
     </div>
 
-    <div style="text-align: center;">
-      <a href="/" class="back-link">← Back to Unblocked Games G+</a>
-    </div>
+    <a href="/" class="back-link">← Back to Unblocked Games G+</a>
   </div>
 
   <!-- Histats.com -->
@@ -164,4 +157,23 @@
   })();</script>
   <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?3998156&101" alt="" border="0"></a></noscript>
 </body>
-</html>
+</html>`;
+}
+
+// Create game directory if not exists
+const gameDir = 'public/game';
+if (!fs.existsSync(gameDir)) {
+  fs.mkdirSync(gameDir, { recursive: true });
+}
+
+// Generate pages for all games
+games.forEach(game => {
+  const slug = createSlug(game.title);
+  const fileName = `${slug}.html`;
+  const filePath = path.join(gameDir, fileName);
+  const html = generateGamePage(game);
+  fs.writeFileSync(filePath, html, 'utf8');
+  console.log(`Generated: ${fileName}`);
+});
+
+console.log(`Generated ${games.length} game pages.`);

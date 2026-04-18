@@ -17,9 +17,10 @@ function generateGamePage(game) {
   const slug = createSlug(game.title);
   const categories = Array.isArray(game.cat) ? game.cat.join(', ') : game.cat;
   const title = `${game.title} - Unblocked Games G+`;
-  const description = `Play ${game.title} unblocked online for free. No download required. ${categories} game.`;
+  const description = `Play ${game.title} unblocked online for free. No download required. ${categories} game. Enjoy this exciting ${categories.toLowerCase()} game directly in your browser with no downloads or installations required.`;
   const url = `https://unblockgamegplus.github.io/game/${slug}.html`;
   const gameUrl = game.gameUrl;
+  const thumbUrl = game.thumb || `https://unblocked-games-g-plus.bitbucket.io/img/class-${game.id}.png`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -42,7 +43,7 @@ function generateGamePage(game) {
   <meta property="og:url" content="${url}">
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${description}">
-  <meta property="og:image" content="${game.thumb}">
+  <meta property="og:image" content="${thumbUrl}">
   <meta property="og:site_name" content="Unblocked Games G+">
 
   <!-- Twitter Card -->
@@ -61,7 +62,7 @@ function generateGamePage(game) {
     "name": "${game.title}",
     "description": "${description}",
     "url": "${url}",
-    "image": "${game.thumb}",
+    "image": "${thumbUrl}",
     "genre": "${categories}",
     "publisher": {
       "@type": "Organization",
@@ -86,16 +87,34 @@ function generateGamePage(game) {
     }
     .header {
       text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
     .game-title {
-      font-size: 2rem;
+      font-size: 2.5rem;
       color: #8b5cf6;
       margin-bottom: 10px;
     }
     .game-meta {
       color: #9ca3af;
       margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+    .game-description {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #d1d5db;
+    }
+    .game-thumbnail {
+      display: block;
+      max-width: 300px;
+      height: auto;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .game-iframe {
       width: 100%;
@@ -105,21 +124,27 @@ function generateGamePage(game) {
     }
     .back-link {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 30px;
       color: #8b5cf6;
       text-decoration: none;
+      font-size: 1.1rem;
+      padding: 10px 20px;
+      border: 1px solid #8b5cf6;
+      border-radius: 8px;
+      transition: all 0.3s ease;
     }
     .back-link:hover {
-      text-decoration: underline;
+      background: #8b5cf6;
+      color: white;
     }
     .ad-banner {
       display: flex;
       justify-content: center;
-      margin: 16px 0;
+      margin: 20px 0;
       background: rgba(255,255,255,0.02);
       border: 1px dashed rgba(255,255,255,0.05);
       border-radius: 12px;
-      padding: 8px 0;
+      padding: 10px 0;
       width: 100%;
       overflow: hidden;
     }
@@ -128,8 +153,12 @@ function generateGamePage(game) {
 <body>
   <div class="container">
     <div class="header">
+      <img src="${thumbUrl}" alt="${game.title}" class="game-thumbnail" loading="lazy">
       <h1 class="game-title">${game.title}</h1>
       <div class="game-meta">Categories: ${categories}</div>
+      <div class="game-description">
+        ${description}
+      </div>
     </div>
 
     <div class="ad-banner">
@@ -142,7 +171,9 @@ function generateGamePage(game) {
       <iframe srcdoc="<!DOCTYPE html><html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;overflow:hidden;}</style></head><body><script>window.atOptions={key:'4b03159602cba0243869c415124b923e',format:'iframe',height:90,width:728,params:{}};</script><script src='https://biggerbreakerfind.com/4b03159602cba0243869c415124b923e/invoke.js'></script></body></html>" width="728" height="90" frameborder="0" scrolling="no"></iframe>
     </div>
 
-    <a href="/" class="back-link">← Back to Unblocked Games G+</a>
+    <div style="text-align: center;">
+      <a href="/" class="back-link">← Back to Unblocked Games G+</a>
+    </div>
   </div>
 
   <!-- Histats.com -->
