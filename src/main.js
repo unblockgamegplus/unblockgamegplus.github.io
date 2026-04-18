@@ -436,7 +436,7 @@ function renderGames() {
     const icon = CAT_ICONS[primaryCat] || '🎮';
     const playSlug = getSlug(g.title);
     return `
-      <article class="game-card" data-id="${g.id}" data-slug="${playSlug}" style="animation-delay:${Math.min(i, 30) * 20}ms" tabindex="0" role="button" aria-label="Play ${g.title}">
+      <a class="game-card game-card-link" href="/game/${playSlug}.html" data-id="${g.id}" data-slug="${playSlug}" style="animation-delay:${Math.min(i, 30) * 20}ms" aria-label="Play ${g.title}">
         <div class="card-thumb">
           <img
             src="${getThumbUrl(g)}"
@@ -453,19 +453,10 @@ function renderGames() {
           <div class="card-title">${g.title}</div>
           <div class="card-cat-tag">${icon} ${primaryCat}</div>
         </div>
-      </article>`;
+      </a>`;
   }).join('');
 
   if (loadWrap) loadWrap.style.display = filtered.length > visibleCount ? 'flex' : 'none';
-
-  grid.querySelectorAll('.game-card').forEach(card => {
-    const play = () => {
-      const slug = card.dataset.slug;
-      window.location.href = `/game/${slug}.html`;
-    };
-    card.addEventListener('click', play);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') play(); });
-  });
 }
 
 // ──── Bind Home Events ─────────────────────────────────────
@@ -572,14 +563,14 @@ function renderPlay({ id }) {
             </div>
             <div class="related-grid" id="related-grid">
               ${related.map(g => `
-                <article class="game-card mini" data-id="${g.id}" data-slug="${getSlug(g.title)}" tabindex="0" role="button" aria-label="Play ${g.title} unblocked">
+                <a class="game-card game-card-link mini" href="/game/${getSlug(g.title)}.html" data-id="${g.id}" data-slug="${getSlug(g.title)}" aria-label="Play ${g.title} unblocked">
                   <div class="card-thumb">
                     <img src="${getThumbUrl(g)}" alt="${g.title} unblocked" loading="lazy" decoding="async"
                       onerror="this.onerror=null;this.src='https://placehold.co/300x188/0d0a26/8b5cf6?text=${encodeURIComponent(g.title.slice(0,20))}'" />
                     <div class="card-overlay"><button class="btn-play" tabindex="-1">▶ Play</button></div>
                   </div>
                   <div class="card-info"><div class="card-title">${g.title}</div></div>
-                </article>`).join('')}
+                </a>`).join('')}
             </div>
           </div>` : ''}
           ${getAdHTML(AD_BOTTOM)}
@@ -612,15 +603,6 @@ function renderPlay({ id }) {
     visibleCount = 60;
     navigate('/');
   });
-  document.getElementById('related-grid')?.querySelectorAll('.game-card').forEach(card => {
-    const play = () => {
-      const slug = card.dataset.slug;
-      window.location.href = `/game/${slug}.html`;
-    };
-    card.addEventListener('click', play);
-    card.addEventListener('keydown', e => { if (e.key === 'Enter') play(); });
-  });
-
   bindRouteLinks();
 }
 
