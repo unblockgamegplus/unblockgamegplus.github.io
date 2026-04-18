@@ -62,6 +62,7 @@ try {
 
     xml += `</urlset>`;
     fs.writeFileSync(path.resolve(`public/${filename}`), xml);
+    fs.writeFileSync(path.resolve(filename), xml);
     console.log(`✅ File ${filename} digenerate dengan ${gameList.length} URL.`);
   };
 
@@ -85,6 +86,7 @@ try {
   indexXml += `</sitemapindex>`;
   
   fs.writeFileSync(path.resolve('public/sitemap.xml'), indexXml);
+  fs.writeFileSync(path.resolve('sitemap.xml'), indexXml);
   console.log(`✅ INDUK Sitemap Index (sitemap.xml) berhasil digenerate menunjuk ke ${sitemapFiles.length} file sitemap anakan!`);
 
 } catch (error) {

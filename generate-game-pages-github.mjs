@@ -233,23 +233,29 @@ function generateGamePage(game) {
 </html>`;
 }
 
-// Create game directory if not exists
-const gameDir = 'public/game';
-if (!fs.existsSync(gameDir)) {
-  fs.mkdirSync(gameDir, { recursive: true });
-}
+// Create publish directories if not exist.
+const gameDirs = ['public/game', 'game'];
+gameDirs.forEach(gameDir => {
+  if (!fs.existsSync(gameDir)) {
+    fs.mkdirSync(gameDir, { recursive: true });
+  }
+});
 
 // Generate pages for all games
 games.forEach(game => {
   const slug = createSlug(game.title);
   const fileName = `${slug}.html`;
-  const filePath = path.join(gameDir, fileName);
   const html = generateGamePage(game);
-  fs.writeFileSync(filePath, html, 'utf8');
+  gameDirs.forEach(gameDir => {
+    const filePath = path.join(gameDir, fileName);
+    fs.writeFileSync(filePath, html, 'utf8');
+  });
   console.log(`Generated: ${fileName}`);
 });
 
-fs.writeFileSync(path.join('public', 'all-games.html'), generateAllGamesIndex(games), 'utf8');
+const allGamesHtml = generateAllGamesIndex(games);
+fs.writeFileSync(path.join('public', 'all-games.html'), allGamesHtml, 'utf8');
+fs.writeFileSync('all-games.html', allGamesHtml, 'utf8');
 console.log('Generated: all-games.html');
 
 console.log(`Generated ${games.length} game pages.`);
