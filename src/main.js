@@ -99,6 +99,7 @@ function buildFooter() {
         <a href="/?page=dmca" class="route-link" data-route="/?page=dmca">DMCA</a>
         <a href="/?page=tos" class="route-link" data-route="/?page=tos">Terms of Service</a>
         <a href="/?page=privacy" class="route-link" data-route="/?page=privacy">Privacy Policy</a>
+        <a href="/all-games.html">All Games</a>
       </div>
       <div class="footer-copy">
         &copy; ${new Date().getFullYear()} Unblocked Games G+. All rights reserved.
@@ -571,7 +572,7 @@ function renderPlay({ id }) {
             </div>
             <div class="related-grid" id="related-grid">
               ${related.map(g => `
-                <article class="game-card mini" data-id="${g.id}" tabindex="0" role="button" aria-label="Play ${g.title} unblocked">
+                <article class="game-card mini" data-id="${g.id}" data-slug="${getSlug(g.title)}" tabindex="0" role="button" aria-label="Play ${g.title} unblocked">
                   <div class="card-thumb">
                     <img src="${getThumbUrl(g)}" alt="${g.title} unblocked" loading="lazy" decoding="async"
                       onerror="this.onerror=null;this.src='https://placehold.co/300x188/0d0a26/8b5cf6?text=${encodeURIComponent(g.title.slice(0,20))}'" />

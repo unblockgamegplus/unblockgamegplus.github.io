@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "generate:games": "node generate-game-pages-github.mjs",
+    "generate:sitemap": "node generate-sitemap-github.mjs",
+    "prebuild": "node generate-game-pages-github.mjs && node generate-sitemap-github.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"

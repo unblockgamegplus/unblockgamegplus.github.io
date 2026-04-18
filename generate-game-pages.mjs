@@ -12,6 +12,48 @@ function createSlug(title) {
     .trim();
 }
 
+function generateAllGamesIndex(games) {
+  const items = games.map(game => {
+    const slug = createSlug(game.title);
+    const categories = Array.isArray(game.cat) ? game.cat.join(', ') : game.cat;
+    return `      <li><a href="/game/${slug}.html">${game.title}</a><span>${categories}</span></li>`;
+  }).join('\n');
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Games - Unblocked Games G+</title>
+  <meta name="description" content="Browse all static HTML game pages on Unblocked Games G+.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://unblockgamegplus.pages.dev/all-games.html">
+  <style>
+    body { margin: 0; font-family: system-ui, sans-serif; background: #08051a; color: #e5e7eb; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 20px 56px; }
+    h1 { margin: 0 0 10px; color: #8b5cf6; }
+    p { color: #cbd5e1; line-height: 1.6; }
+    .top-link { display: inline-block; margin: 12px 0 28px; color: #c4b5fd; text-decoration: none; }
+    ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+    li { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 16px; }
+    a { color: #fff; text-decoration: none; font-weight: 700; display: block; margin-bottom: 6px; }
+    a:hover { color: #c4b5fd; }
+    span { color: #94a3b8; font-size: 0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>All Unblocked Games</h1>
+    <p>Static HTML directory of every game page available on Unblocked Games G+.</p>
+    <a class="top-link" href="/">Back to homepage</a>
+    <ul>
+${items}
+    </ul>
+  </div>
+</body>
+</html>`;
+}
+
 // Template for game page
 function generateGamePage(game) {
   const slug = createSlug(game.title);
@@ -206,5 +248,8 @@ games.forEach(game => {
   fs.writeFileSync(filePath, html, 'utf8');
   console.log(`Generated: ${fileName}`);
 });
+
+fs.writeFileSync(path.join('public', 'all-games.html'), generateAllGamesIndex(games), 'utf8');
+console.log('Generated: all-games.html');
 
 console.log(`Generated ${games.length} game pages.`);

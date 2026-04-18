@@ -52,7 +52,7 @@ try {
     }
 
     gameList.forEach(game => {
-      // Static HTML page URL
+      // Sitemap should point to the static HTML game page.
       const slug = getSlug(game.title);
       const gameUrl = `${baseUrl}/game/${slug}.html`;
       const safeUrl = gameUrl.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

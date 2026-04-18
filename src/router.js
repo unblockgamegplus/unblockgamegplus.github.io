@@ -23,8 +23,8 @@ export function resolve() {
     const title = parts.slice(1).join('-');
     // Create slug from title
     const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/(^-|-$)/g, '');
-    // Redirect to static page
-    window.location.href = `https://unblockgamegplus.pages.dev/game/${slug}.html`;
+    // Redirect legacy query URLs to the static GitHub Pages game URLs.
+    window.location.href = `https://unblockgamegplus.github.io/game/${slug}.html`;
     return;
   } else if (params.has('page')) {
     // Expected format: ?page=contact
