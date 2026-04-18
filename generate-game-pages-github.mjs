@@ -166,7 +166,14 @@ function generateAllGamesIndex(allGames) {
   const items = allGames.map(game => {
     const slug = createSlug(game.title);
     const categories = Array.isArray(game.cat) ? game.cat.join(', ') : game.cat;
-    return `      <li><a href="/game/${slug}.html">${escapeHtml(game.title)}</a><span>${escapeHtml(categories)}</span></li>`;
+    const thumbUrl = `/img/class-${game.id}.webp`;
+    return `      <li>
+        <a class="game-link" href="/game/${slug}.html">
+          <img src="${thumbUrl}" alt="${escapeHtml(game.title)}" loading="lazy" decoding="async">
+          <strong>${escapeHtml(game.title)}</strong>
+          <span>${escapeHtml(categories)}</span>
+        </a>
+      </li>`;
   }).join('\n');
 
   return `<!DOCTYPE html>
@@ -184,11 +191,13 @@ function generateAllGamesIndex(allGames) {
     h1 { margin: 0 0 10px; color: #8b5cf6; }
     p { color: #cbd5e1; line-height: 1.6; }
     .top-link { display: inline-block; margin: 12px 0 28px; color: #c4b5fd; text-decoration: none; }
-    ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
-    li { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 14px 16px; }
-    a { color: #fff; text-decoration: none; font-weight: 700; display: block; margin-bottom: 6px; }
-    a:hover { color: #c4b5fd; }
-    span { color: #94a3b8; font-size: 0.95rem; }
+    ul { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+    li { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; overflow: hidden; }
+    .game-link { color: #fff; text-decoration: none; display: block; }
+    .game-link:hover strong { color: #c4b5fd; }
+    .game-link img { width: 100%; aspect-ratio: 16/10; object-fit: cover; background: #120d2a; }
+    .game-link strong { display: block; font-size: 1rem; padding: 12px 14px 6px; }
+    .game-link span { display: block; color: #94a3b8; font-size: 0.9rem; padding: 0 14px 14px; line-height: 1.5; }
   </style>
 </head>
 <body>

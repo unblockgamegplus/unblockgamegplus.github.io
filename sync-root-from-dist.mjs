@@ -5,6 +5,7 @@ const root = process.cwd();
 const distDir = path.join(root, 'dist');
 const distAssetsDir = path.join(distDir, 'assets');
 const rootAssetsDir = path.join(root, 'assets');
+const publicDir = path.join(root, 'public');
 
 function ensureDir(dirPath) {
   if (!fs.existsSync(dirPath)) {
@@ -43,6 +44,17 @@ if (fs.existsSync(dist404)) {
 
 if (fs.existsSync(distAssetsDir)) {
   copyDir(distAssetsDir, rootAssetsDir);
+}
+
+const publicGamesJson = path.join(publicDir, 'games.json');
+if (fs.existsSync(publicGamesJson)) {
+  copyFile(publicGamesJson, path.join(root, 'games.json'));
+}
+
+const publicImgDir = path.join(publicDir, 'img');
+const rootImgDir = path.join(root, 'img');
+if (fs.existsSync(publicImgDir)) {
+  copyDir(publicImgDir, rootImgDir);
 }
 
 console.log('Root publish files synced from dist.');
