@@ -16,10 +16,16 @@ export function resolve() {
   const params = new URLSearchParams(window.location.search);
   
   if (params.has('play')) {
-    // Expected format: ?play=10-impossible-tic-tac-toe
+    // Redirect old ?play= URLs to new static pages
     const playParam = params.get('play');
-    const id = playParam.split('-')[0];
-    if (routes['/play']) routes['/play']({ id });
+    const parts = playParam.split('-');
+    const id = parts[0];
+    const title = parts.slice(1).join('-');
+    // Create slug from title
+    const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/(^-|-$)/g, '');
+    // Redirect to static page
+    window.location.href = `/game/${slug}.html`;
+    return;
   } else if (params.has('page')) {
     // Expected format: ?page=contact
     const pageId = params.get('page');
