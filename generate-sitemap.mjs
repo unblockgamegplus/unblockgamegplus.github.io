@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // URL Root
-const baseUrl = 'https://unblockgamegplus.github.io';
+const baseUrl = 'https://unblockgamegplus.pages.dev';
 const gamesJsonPath = path.resolve('public/games.json');
 
 function getSlug(title) {

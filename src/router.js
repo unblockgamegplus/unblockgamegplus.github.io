@@ -24,7 +24,7 @@ export function resolve() {
     // Create slug from title
     const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/(^-|-$)/g, '');
     // Redirect to static page
-    window.location.href = `https://unblockgamegplus.github.io/game/${slug}.html`;
+    window.location.href = `https://unblockgamegplus.pages.dev/game/${slug}.html`;
     return;
   } else if (params.has('page')) {
     // Expected format: ?page=contact

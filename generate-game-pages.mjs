@@ -18,7 +18,7 @@ function generateGamePage(game) {
   const categories = Array.isArray(game.cat) ? game.cat.join(', ') : game.cat;
   const title = `${game.title} - Unblocked Games G+`;
   const description = `Play ${game.title} unblocked online for free. No download required. ${categories} game. Enjoy this exciting ${categories.toLowerCase()} game directly in your browser with no downloads or installations required.`;
-  const url = `https://unblockgamegplus.github.io/game/${slug}.html`;
+  const url = `https://unblockgamegplus.pages.dev/game/${slug}.html`;
   const gameUrl = game.gameUrl;
   const thumbUrl = game.thumb || `https://unblocked-games-g-plus.bitbucket.io/img/class-${game.id}.png`;
 
