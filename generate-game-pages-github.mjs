@@ -196,6 +196,25 @@ function getSingleAd300HTML(slot, comment = '300x250_ad') {
       </div>`;
 }
 
+function getAdsterra300HTML() {
+  return `
+      <div class="ad-adsterra-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:28px auto;text-align:center;">
+        <span class="ad-subtle-badge" style="margin-bottom:8px;">✨ SPONSORED</span>
+        <div class="ad-container-300" style="margin:0 auto;">
+          <script>
+            atOptions = {
+              'key' : 'ef5cdc72a62a03d1d689161ba6bc82f6',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script src="https://grop.net/22/ef5cdc72a62a03d1d689161ba6bc82f6"></script>
+        </div>
+      </div>`;
+}
+
 function getCategoryCount(categoryId) {
   if (categoryId === 'all') return games.length;
   return games.filter(game => {
@@ -424,6 +443,7 @@ function generateAllGamesIndex(allGames) {
     <ul>
 ${items}
     </ul>
+    ${getAdsterra300HTML()}
     ${getAdsDuoRowHTML()}
     <footer style="margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-size:0.85rem;color:#94a3b8;">
       <p style="margin:0 0 8px;">
@@ -890,6 +910,8 @@ function generateGamePage(game, allGames) {
       </div>
 
       ${buildGameSeoContent(game, cats)}
+
+      ${getAdsterra300HTML()}
 
       ${related.length ? `
       <div class="related-section">

@@ -90,6 +90,16 @@ function getSingleAd300HTML(slot, comment = '300x250_ad') {
   </div>`;
 }
 
+function getAdsterra300HTML() {
+  return `
+  <div class="ad-adsterra-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:28px auto;text-align:center;">
+    <span class="ad-subtle-badge" style="margin-bottom:8px;">✨ SPONSORED</span>
+    <div class="ad-container-300" style="margin:0 auto;">
+      <iframe srcdoc="&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style&gt;body{margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;align-items:center;background:transparent;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;atOptions={'key':'ef5cdc72a62a03d1d689161ba6bc82f6','format':'iframe','height':250,'width':300,'params':{}};&lt;/script&gt;&lt;script src=&quot;https://grop.net/22/ef5cdc72a62a03d1d689161ba6bc82f6&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;" style="width:300px;height:250px;border:none;overflow:hidden;" scrolling="no"></iframe>
+    </div>
+  </div>`;
+}
+
 // ──── Category Ribbon (Horizontal Top Navigation Bar) ──────
 function buildCategoryRibbon() {
   return `
@@ -480,6 +490,7 @@ function renderHome() {
         </div>
 
         ${getAdsDuoRowHTML()}
+        ${getAdsterra300HTML()}
         ${buildHomeSeoBlock()}
         ${buildFooter()}
       </div>
@@ -713,6 +724,7 @@ function renderPlay({ id }) {
             </div>
           </div>
           ${buildGameSeoContent(game, cats)}
+          ${getAdsterra300HTML()}
           ${related.length ? `
           <div class="related-section">
             <div class="related-section-header">
