@@ -212,6 +212,36 @@ function getSingleAd300HTML(slot = ADSENSE_SLOT_HERO, comment = 'Responsive_336x
       </div>`;
 }
 
+function getInGameFloatingAdHTML(slot = ADSENSE_SLOT_HERO) {
+  return `
+      <div class="in-game-floating-ad" id="in-game-floating-ad">
+        <div class="floating-ad-actions">
+          <span class="floating-ad-badge">✨ ADVERTISEMENT</span>
+          <div class="floating-ad-btns">
+            <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ↓</button>
+            <button type="button" class="btn-floating-fs" id="btn-floating-fs" title="Fullscreen Game">FULL SCREEN</button>
+          </div>
+        </div>
+        <div class="floating-ad-box">
+          <div class="ad-banner-adsense" style="margin:0;min-height:90px;width:100%;">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687742238485131"
+                 crossorigin="anonymous"></script>
+            <!-- In-Player Floating Horizontal Ad -->
+            <ins class="adsbygoogle"
+                 style="display:block;width:100%;max-width:728px;height:90px;margin:0 auto;"
+                 data-ad-client="ca-pub-8687742238485131"
+                 data-ad-slot="${slot}"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="false"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="btn-floating-restore" id="btn-floating-restore" style="display:none;" title="Show Advertisement">📢 Ad</button>`;
+}
+
 function getAdsterra300HTML() {
   return `
       <div class="ad-adsterra-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:28px auto;text-align:center;">
@@ -699,6 +729,148 @@ function generateGamePage(game, allGames) {
     .loading-note {
       font-size:0.82rem; color:var(--text3); text-align:center; max-width:320px; line-height:1.5;
     }
+    /* ── In-Game Floating Responsive Ad Banner ───────────────── */
+    .in-game-floating-ad {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: calc(100% - 20px);
+      width: auto;
+      pointer-events: auto;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
+    }
+    .in-game-floating-ad.is-hidden {
+      transform: translateX(-50%) translateY(140%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .floating-ad-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 728px;
+      padding: 4px 8px;
+      box-sizing: border-box;
+      background: rgba(13, 10, 38, 0.95);
+      backdrop-filter: blur(8px);
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-bottom: none;
+    }
+    .floating-ad-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--text3, #94a3b8);
+      text-transform: uppercase;
+    }
+    .floating-ad-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-floating-close {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #dc2626;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease;
+      line-height: 1.2;
+    }
+    .btn-floating-close:hover {
+      background: #b91c1c;
+      transform: translateY(-1px);
+    }
+    .btn-floating-fs {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+    }
+    .btn-floating-fs:hover {
+      border-color: var(--purple, #8b5cf6);
+      background: #111;
+      color: #a78bfa;
+    }
+    .floating-ad-box {
+      background: rgba(8, 5, 26, 0.96);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      padding: 4px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      max-width: 728px;
+      min-height: 90px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .floating-ad-box .ad-banner-adsense {
+      margin: 0 !important;
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-floating-restore {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      z-index: 35;
+      background: rgba(13, 10, 38, 0.88);
+      color: var(--text2, #cbd5e1);
+      border: 1px solid rgba(139, 92, 246, 0.4);
+      backdrop-filter: blur(8px);
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      display: none;
+    }
+    .btn-floating-restore:hover {
+      background: var(--purple, #8b5cf6);
+      color: #fff;
+      border-color: var(--purple, #8b5cf6);
+    }
+    ins.adsbygoogle[data-ad-status="unfilled"],
+    .in-game-floating-ad:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+      display: none !important;
+    }
+    @media (max-width: 768px) {
+      .floating-ad-box { min-height: 50px; max-width: 320px; }
+      .floating-ad-box .adsbygoogle { max-height: 50px; }
+      .floating-ad-actions { max-width: 320px; }
+    }
     .dock-ad-card {
       margin: 14px 0 0;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(13, 10, 38, 0.6) 100%);
@@ -1031,19 +1203,7 @@ function generateGamePage(game, allGames) {
           allow="fullscreen; autoplay; encrypted-media; gamepad"
           sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-top-navigation allow-modals"
         ></iframe>
-      </div>
-
-      <div class="dock-ad-card" id="dock-ad-card">
-        <div class="dock-ad-header">
-          <span class="dock-ad-badge">✨ ADVERTISEMENT</span>
-          <button type="button" class="btn-dock-ad-toggle" id="btn-dock-ad-toggle" aria-label="Minimize advertisement">
-            <span class="dock-toggle-icon">−</span>
-            <span class="dock-toggle-label">Minimize</span>
-          </button>
-        </div>
-        <div class="dock-ad-content" id="dock-ad-content">
-          ${getAdSenseHTML(ADSENSE_SLOT_HERO, 'Iklan Responsive unblockedgames - Below Game Frame')}
-        </div>
+        ${getInGameFloatingAdHTML(ADSENSE_SLOT_HERO)}
       </div>
 
       <div class="hero-row">
@@ -1118,16 +1278,55 @@ ${relatedCards}
         });
       }
 
-      var dockToggle = document.getElementById('btn-dock-ad-toggle');
-      var dockCard = document.getElementById('dock-ad-card');
-      if (dockToggle && dockCard) {
-        dockToggle.addEventListener('click', function () {
-          var isMin = dockCard.classList.toggle('is-minimized');
-          var label = dockToggle.querySelector('.dock-toggle-label');
-          var icon = dockToggle.querySelector('.dock-toggle-icon');
-          if (label) label.textContent = isMin ? 'Expand' : 'Minimize';
-          if (icon) icon.textContent = isMin ? '+' : '−';
+      var btnFloatingClose = document.getElementById('btn-floating-close');
+      var btnFloatingFs = document.getElementById('btn-floating-fs');
+      var btnFloatingRestore = document.getElementById('btn-floating-restore');
+      var floatingAd = document.getElementById('in-game-floating-ad');
+
+      if (btnFloatingClose && floatingAd) {
+        btnFloatingClose.addEventListener('click', function (e) {
+          e.stopPropagation();
+          floatingAd.classList.add('is-hidden');
+          if (btnFloatingRestore) btnFloatingRestore.style.display = 'inline-flex';
         });
+      }
+
+      if (btnFloatingRestore && floatingAd) {
+        btnFloatingRestore.addEventListener('click', function (e) {
+          e.stopPropagation();
+          floatingAd.classList.remove('is-hidden');
+          btnFloatingRestore.style.display = 'none';
+        });
+      }
+
+      if (btnFloatingFs && container) {
+        btnFloatingFs.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (document.fullscreenElement) {
+            document.exitFullscreen();
+          } else if (container.requestFullscreen) {
+            container.requestFullscreen();
+          }
+        });
+      }
+
+      document.addEventListener('fullscreenchange', function () {
+        if (btnFloatingFs) {
+          btnFloatingFs.textContent = document.fullscreenElement ? 'EXIT FULL' : 'FULL SCREEN';
+        }
+      });
+
+      if (floatingAd) {
+        var insEl = floatingAd.querySelector('ins.adsbygoogle');
+        if (insEl) {
+          var observer = new MutationObserver(function () {
+            if (insEl.getAttribute('data-ad-status') === 'unfilled') {
+              floatingAd.style.display = 'none';
+              if (btnFloatingRestore) btnFloatingRestore.style.display = 'none';
+            }
+          });
+          observer.observe(insEl, { attributes: true, attributeFilter: ['data-ad-status'] });
+        }
       }
 
       var closeBtn = document.getElementById('sidebar-close-btn');

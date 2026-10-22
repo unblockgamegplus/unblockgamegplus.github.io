@@ -92,6 +92,31 @@ function getSingleAd300HTML(slot = ADSENSE_SLOT_HERO, comment = 'Responsive_336x
   </div>`;
 }
 
+function getInGameFloatingAdHTML(slot = ADSENSE_SLOT_HERO) {
+  return `
+  <div class="in-game-floating-ad" id="in-game-floating-ad">
+    <div class="floating-ad-actions">
+      <span class="floating-ad-badge">✨ ADVERTISEMENT</span>
+      <div class="floating-ad-btns">
+        <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ↓</button>
+        <button type="button" class="btn-floating-fs" id="btn-floating-fs" title="Fullscreen Game">FULL SCREEN</button>
+      </div>
+    </div>
+    <div class="floating-ad-box">
+      <div class="ad-banner-adsense" style="margin:0;min-height:90px;width:100%;">
+        <!-- In-Player Floating Horizontal Ad -->
+        <ins class="adsbygoogle"
+             style="display:block;width:100%;max-width:728px;height:90px;margin:0 auto;"
+             data-ad-client="${ADSENSE_CLIENT}"
+             data-ad-slot="${slot}"
+             data-ad-format="horizontal"
+             data-full-width-responsive="false"></ins>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn-floating-restore" id="btn-floating-restore" style="display:none;" title="Show Advertisement">📢 Ad</button>`;
+}
+
 function getAdsterra300HTML() {
   return `
   <div class="ad-adsterra-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:28px auto;text-align:center;">
@@ -777,18 +802,7 @@ function renderPlay({ id }) {
               allow="fullscreen; autoplay; encrypted-media; gamepad"
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-top-navigation allow-modals"
             ></iframe>
-          </div>
-          <div class="dock-ad-card" id="dock-ad-card">
-            <div class="dock-ad-header">
-              <span class="dock-ad-badge">✨ ADVERTISEMENT</span>
-              <button type="button" class="btn-dock-ad-toggle" id="btn-dock-ad-toggle" aria-label="Minimize advertisement">
-                <span class="dock-toggle-icon">−</span>
-                <span class="dock-toggle-label">Minimize</span>
-              </button>
-            </div>
-            <div class="dock-ad-content" id="dock-ad-content">
-              ${getAdSenseHTML(ADSENSE_SLOT_HERO, 'Iklan Responsive unblockedgames - Below Game Frame')}
-            </div>
+            ${getInGameFloatingAdHTML(ADSENSE_SLOT_HERO)}
           </div>
           <div class="hero-row">
             <div class="hero-thumb">
@@ -837,16 +851,52 @@ function renderPlay({ id }) {
     document.fullscreenElement ? document.exitFullscreen() : c?.requestFullscreen();
   });
 
-  const dockToggle = $('btn-dock-ad-toggle');
-  const dockCard = $('dock-ad-card');
-  if (dockToggle && dockCard) {
-    dockToggle.addEventListener('click', () => {
-      const isMin = dockCard.classList.toggle('is-minimized');
-      const label = dockToggle.querySelector('.dock-toggle-label');
-      const icon = dockToggle.querySelector('.dock-toggle-icon');
-      if (label) label.textContent = isMin ? 'Expand' : 'Minimize';
-      if (icon) icon.textContent = isMin ? '+' : '−';
+  const btnFloatingClose = $('btn-floating-close');
+  const btnFloatingFs = $('btn-floating-fs');
+  const btnFloatingRestore = $('btn-floating-restore');
+  const floatingAd = $('in-game-floating-ad');
+
+  if (btnFloatingClose && floatingAd) {
+    btnFloatingClose.addEventListener('click', (e) => {
+      e.stopPropagation();
+      floatingAd.classList.add('is-hidden');
+      if (btnFloatingRestore) btnFloatingRestore.style.display = 'inline-flex';
     });
+  }
+
+  if (btnFloatingRestore && floatingAd) {
+    btnFloatingRestore.addEventListener('click', (e) => {
+      e.stopPropagation();
+      floatingAd.classList.remove('is-hidden');
+      btnFloatingRestore.style.display = 'none';
+    });
+  }
+
+  if (btnFloatingFs) {
+    btnFloatingFs.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const c = $('game-container');
+      document.fullscreenElement ? document.exitFullscreen() : c?.requestFullscreen();
+    });
+  }
+
+  document.addEventListener('fullscreenchange', () => {
+    if (btnFloatingFs) {
+      btnFloatingFs.textContent = document.fullscreenElement ? 'EXIT FULL' : 'FULL SCREEN';
+    }
+  });
+
+  if (floatingAd) {
+    const insEl = floatingAd.querySelector('ins.adsbygoogle');
+    if (insEl) {
+      const observer = new MutationObserver(() => {
+        if (insEl.getAttribute('data-ad-status') === 'unfilled') {
+          floatingAd.style.display = 'none';
+          if (btnFloatingRestore) btnFloatingRestore.style.display = 'none';
+        }
+      });
+      observer.observe(insEl, { attributes: true, attributeFilter: ['data-ad-status'] });
+    }
   }
 
   $('btn-menu')?.addEventListener('click', () => {
