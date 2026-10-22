@@ -176,8 +176,8 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: calc(100% - 20px);
-      width: auto;
+      width: 728px;
+      max-width: calc(100% - 16px);
       pointer-events: auto;
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
     }
@@ -191,7 +191,6 @@
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      max-width: 728px;
       padding: 4px 8px;
       box-sizing: border-box;
       background: rgba(13, 10, 38, 0.95);
@@ -217,11 +216,12 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 4px;
       background: #dc2626;
       color: #fff;
       border: none;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.74rem;
       font-weight: 700;
       padding: 3px 10px;
       cursor: pointer;
@@ -264,17 +264,16 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
-      max-width: 728px;
-      min-height: 90px;
       width: 100%;
+      height: 98px;
       box-sizing: border-box;
     }
-    .floating-ad-box .ad-banner-adsense {
-      margin: 0 !important;
-      min-height: 90px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .in-player-ins-ad {
+      display: inline-block !important;
+      width: 728px !important;
+      height: 90px !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
     }
     .btn-floating-restore {
       position: absolute;
@@ -304,9 +303,13 @@
       display: none !important;
     }
     @media (max-width: 768px) {
-      .floating-ad-box { min-height: 50px; max-width: 320px; }
-      .floating-ad-box .adsbygoogle { max-height: 50px; }
-      .floating-ad-actions { max-width: 320px; }
+      .in-game-floating-ad { width: 336px; max-width: calc(100% - 16px); }
+      .floating-ad-box { height: 98px; }
+      .in-player-ins-ad { width: 336px !important; height: 90px !important; }
+    }
+    @media (max-width: 360px) {
+      .in-game-floating-ad { width: 300px; max-width: calc(100% - 12px); }
+      .in-player-ins-ad { width: 300px !important; height: 90px !important; }
     }
     .dock-ad-card {
       margin: 14px 0 0;
@@ -801,25 +804,20 @@
         <div class="floating-ad-actions">
           <span class="floating-ad-badge">✨ ADVERTISEMENT</span>
           <div class="floating-ad-btns">
-            <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ↓</button>
+            <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ✕</button>
             <button type="button" class="btn-floating-fs" id="btn-floating-fs" title="Fullscreen Game">FULL SCREEN</button>
           </div>
         </div>
         <div class="floating-ad-box">
-          <div class="ad-banner-adsense" style="margin:0;min-height:90px;width:100%;">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687742238485131"
-                 crossorigin="anonymous"></script>
-            <!-- In-Player Floating Horizontal Ad -->
-            <ins class="adsbygoogle"
-                 style="display:block;width:100%;max-width:728px;height:90px;margin:0 auto;"
-                 data-ad-client="ca-pub-8687742238485131"
-                 data-ad-slot="6097283217"
-                 data-ad-format="horizontal"
-                 data-full-width-responsive="false"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8687742238485131"
+               crossorigin="anonymous"></script>
+          <!-- In-Player Floating Horizontal Ad (728x90 / 336x90) -->
+          <ins class="adsbygoogle in-player-ins-ad"
+               data-ad-client="ca-pub-8687742238485131"
+               data-ad-slot="6097283217"></ins>
+          <script>
+               (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
         </div>
       </div>
       <button type="button" class="btn-floating-restore" id="btn-floating-restore" style="display:none;" title="Show Advertisement">📢 Ad</button>

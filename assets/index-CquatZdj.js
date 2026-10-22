@@ -111,20 +111,15 @@
     <div class="floating-ad-actions">
       <span class="floating-ad-badge">✨ ADVERTISEMENT</span>
       <div class="floating-ad-btns">
-        <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ↓</button>
+        <button type="button" class="btn-floating-close" id="btn-floating-close" title="Close Advertisement">Close ✕</button>
         <button type="button" class="btn-floating-fs" id="btn-floating-fs" title="Fullscreen Game">FULL SCREEN</button>
       </div>
     </div>
     <div class="floating-ad-box">
-      <div class="ad-banner-adsense" style="margin:0;min-height:90px;width:100%;">
-        <!-- In-Player Floating Horizontal Ad -->
-        <ins class="adsbygoogle"
-             style="display:block;width:100%;max-width:728px;height:90px;margin:0 auto;"
-             data-ad-client="${g}"
-             data-ad-slot="${e}"
-             data-ad-format="horizontal"
-             data-full-width-responsive="false"></ins>
-      </div>
+      <!-- In-Player Floating Horizontal Ad (728x90 / 336x90) -->
+      <ins class="adsbygoogle in-player-ins-ad"
+           data-ad-client="${g}"
+           data-ad-slot="${e}"></ins>
     </div>
   </div>
   <button type="button" class="btn-floating-restore" id="btn-floating-restore" style="display:none;" title="Show Advertisement">📢 Ad</button>`}function E(){return`
