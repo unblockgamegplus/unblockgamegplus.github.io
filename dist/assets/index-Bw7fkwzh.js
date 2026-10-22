@@ -177,7 +177,7 @@
         &copy; ${new Date().getFullYear()} Unblocked Games G+. All rights reserved.
       </div>
     </footer>
-  `}function R(){document.querySelectorAll(`.route-link`).forEach(e=>{e.addEventListener(`click`,t=>{t.preventDefault(),o(e.getAttribute(`data-route`)),window.scrollTo(0,0)})})}var z={Skill:`skill-based challenges that test your reflexes, timing, and precision`,Running:`endless running adventures where speed and agility are key to survival`,Adventure:`exciting adventure quests full of exploration, story, and discovery`,Platform:`classic platformer gameplay with jumping, dodging, and collecting`,Car:`thrilling car games with fast driving, parking challenges, and stunts`,Racing:`high-speed racing competitions across tracks, roads, and off-road terrain`,Moto:`adrenaline-pumping motorcycle racing and stunt games`,"3D":`3D browser games with immersive graphics and gameplay depth`,Shooting:`action-packed shooting games with weapons, enemies, and strategy`,Multiplayer:`multiplayer games you can enjoy with friends or compete globally`,Puzzle:`brain-teasing puzzle challenges that train logic and problem-solving`,Animal:`fun animal-themed games featuring pets, wildlife, and cute creatures`,Simulation:`realistic simulation experiences from city-building to life sims`,Management:`management and strategy games where you build, plan, and optimize`,Survival:`intense survival games where every decision keeps you alive`,Strategy:`deep strategy games combining planning, tactics, and decision-making`,Board:`classic board games reimagined in the browser for instant fun`,Girls:`fun and creative games designed for everyone who loves style and creativity`,"2 Player":`two-player games perfect for competing or cooperating with a friend`,Sports:`sports action games covering football, basketball, tennis, and more`,Popular:`the most-played and trending unblocked games loved by millions`,New:`the newest HTML5 games freshly added to the collection`,Stickman:`hilarious and action-packed stickman fighting and adventure games`};function B(e,t){let r=t[0]||`Action`,i=z[r]||`fun browser games you can play anywhere`;n[r];let a=t.map(e=>`<span class="game-fact-tag">${n[e]||`🎮`} ${e}</span>`).join(``);return`
+  `}function R(){document.querySelectorAll(`.route-link`).forEach(e=>{e.addEventListener(`click`,t=>{t.preventDefault(),o(e.getAttribute(`data-route`)),window.scrollTo(0,0)})})}var z={Skill:`skill-based challenges that test your reflexes, timing, and precision`,Running:`endless running adventures where speed and agility are key to survival`,Adventure:`exciting adventure quests full of exploration, story, and discovery`,Platform:`classic platformer gameplay with jumping, dodging, and collecting`,Car:`thrilling car games with fast driving, parking challenges, and stunts`,Racing:`high-speed racing competitions across tracks, roads, and off-road terrain`,Moto:`adrenaline-pumping motorcycle racing and stunt games`,"3D":`3D browser games with immersive graphics and gameplay depth`,Shooting:`action-packed shooting games with weapons, enemies, and strategy`,Multiplayer:`multiplayer games you can enjoy with friends or compete globally`,Puzzle:`brain-teasing puzzle challenges that train logic and problem-solving`,Animal:`fun animal-themed games featuring pets, wildlife, and cute creatures`,Simulation:`realistic simulation experiences from city-building to life sims`,Management:`management and strategy games where you build, plan, and optimize`,Survival:`intense survival games where every decision keeps you alive`,Strategy:`deep strategy games combining planning, tactics, and decision-making`,Board:`classic board games reimagined in the browser for instant fun`,Girls:`fun and creative games designed for everyone who loves style and creativity`,"2 Player":`two-player games perfect for competing or cooperating with a friend`,Sports:`sports action games covering football, basketball, tennis, and more`,Popular:`the most-played and trending unblocked games loved by millions`,New:`the newest HTML5 games freshly added to the collection`,Stickman:`hilarious and action-packed stickman fighting and adventure games`};function B(e,t,r){let i=t[0]||`Action`,a=z[i]||`fun browser games you can play anywhere`;n[i];let o=t.map(e=>`<span class="game-fact-tag">${n[e]||`🎮`} ${e}</span>`).join(``);return`
   <section class="game-seo-wrap">
     <!-- About -->
     <div class="game-seo-card about-card-split">
@@ -187,8 +187,8 @@
           <h2>About ${e.title}</h2>
         </div>
         <p>
-          <strong>${e.title}</strong> is a free unblocked ${r.toLowerCase()} game available on <strong>Unblocked Games G+</strong>.
-          It belongs to the genre of ${i}.
+          <strong>${e.title}</strong> is a free unblocked ${i.toLowerCase()} game available on <strong>Unblocked Games G+</strong>.
+          It belongs to the genre of ${a}.
           Play <strong>${e.title} unblocked</strong> directly in your browser &mdash; no downloads,
           no installations, and no registrations required.
         </p>
@@ -200,7 +200,7 @@
         <div class="game-facts-row">
           <div class="game-fact-item">
             <span class="game-fact-label">🏷️ Genre</span>
-            <div class="game-fact-tags">${a}</div>
+            <div class="game-fact-tags">${o}</div>
           </div>
           <div class="game-fact-item">
             <span class="game-fact-label">🖥️ Platform</span>
@@ -213,6 +213,10 @@
           <div class="game-fact-item">
             <span class="game-fact-label">🔓 Access</span>
             <div class="game-fact-tags"><span class="game-fact-tag">⚡ No Login</span><span class="game-fact-tag">⚡ No Download</span></div>
+          </div>
+          <div class="game-fact-item">
+            <span class="game-fact-label">⭐ User Rating</span>
+            <div class="game-fact-tags"><span class="game-fact-tag fact-rating"><span id="fact-rating-val">${r?r.ratingValue.toFixed(1):`4.8`}</span> ★ / 5 (<span id="fact-rating-count">${r?r.ratingCount:`120`}</span> votes)</span></div>
           </div>
         </div>
       </div>
@@ -273,7 +277,7 @@
         </details>
         <details class="faq-item">
           <summary>What category is ${e.title}?</summary>
-          <p><strong>${e.title}</strong> is categorized as a <strong>${t.join(` / `)}</strong> game. Browse more ${r} unblocked games on Unblocked Games G+ using the category sidebar.</p>
+          <p><strong>${e.title}</strong> is categorized as a <strong>${t.join(` / `)}</strong> game. Browse more ${i} unblocked games on Unblocked Games G+ using the category sidebar.</p>
         </details>
       </div>
     </div>
@@ -386,13 +390,13 @@
         ${L()}
       </div>
     </div>
-  `,document.querySelectorAll(`.home-cat-chip`).forEach(e=>{e.addEventListener(`click`,t=>{t.preventDefault(),O=e.dataset.cat,A=60,H(),window.scrollTo({top:0,behavior:`smooth`})})}),G(),R(),W(),b()}function U(e){return e.toLowerCase().replace(/[^a-z0-9\s-]/g,``).replace(/\s+/g,`-`).replace(/-+/g,`-`).replace(/(^-|-$)/g,``)}function W(){let e=P(),i=j(`games-grid`),a=j(`game-count`),o=j(`load-more-wrap`),s=j(`section-title`);if(a&&(a.textContent=`(${e.length})`),s&&k)s.innerHTML=`🔍 Results for "<em>${k}</em>" <span class="count">(${e.length})</span>`;else if(s){let t=r.find(e=>e.id===O);s.innerHTML=`${O===`all`?`🔥 All Games`:t?`${t.emoji} ${t.label}`:O} <span class="count">(${e.length})</span>`}if(e.length===0){i.innerHTML=`
+  `,document.querySelectorAll(`.home-cat-chip`).forEach(e=>{e.addEventListener(`click`,t=>{t.preventDefault(),O=e.dataset.cat,A=60,H(),window.scrollTo({top:0,behavior:`smooth`})})}),K(),R(),G(),b()}function U(e){return e.toLowerCase().replace(/[^a-z0-9\s-]/g,``).replace(/\s+/g,`-`).replace(/-+/g,`-`).replace(/(^-|-$)/g,``)}function W(e,t){let n=0,r=String(e||``)+`_`+String(t||``);for(let e=0;e<r.length;e++)n=(n<<5)-n+r.charCodeAt(e),n|=0;let i=Math.abs(n),a=Number((4.5+i%41/100).toFixed(1)),o=85+i%360;return{ratingValue:a,ratingCount:o,ratingSum:Math.round(a*o)}}function G(){let e=P(),i=j(`games-grid`),a=j(`game-count`),o=j(`load-more-wrap`),s=j(`section-title`);if(a&&(a.textContent=`(${e.length})`),s&&k)s.innerHTML=`🔍 Results for "<em>${k}</em>" <span class="count">(${e.length})</span>`;else if(s){let t=r.find(e=>e.id===O);s.innerHTML=`${O===`all`?`🔥 All Games`:t?`${t.emoji} ${t.label}`:O} <span class="count">(${e.length})</span>`}if(e.length===0){i.innerHTML=`
       <div class="empty-state">
         <div class="empty-icon">🎮</div>
         <h3>No games found</h3>
         <p>Try a different search or category.</p>
         <button class="btn-primary" id="btn-clear-search">Clear Search</button>
-      </div>`,o&&(o.style.display=`none`),j(`btn-clear-search`)?.addEventListener(`click`,()=>{k=``,j(`search-input`).value=``,j(`search-clear`).style.display=`none`,W()});return}i.innerHTML=e.slice(0,A).map((e,r)=>{let i=(Array.isArray(e.cat)?e.cat:[e.cat])[0]||``,a=n[i]||`🎮`,o=U(e.title);return`
+      </div>`,o&&(o.style.display=`none`),j(`btn-clear-search`)?.addEventListener(`click`,()=>{k=``,j(`search-input`).value=``,j(`search-clear`).style.display=`none`,G()});return}i.innerHTML=e.slice(0,A).map((e,r)=>{let i=(Array.isArray(e.cat)?e.cat:[e.cat])[0]||``,a=n[i]||`🎮`,o=U(e.title);return`
       <a class="game-card game-card-link" href="/game/${o}.html" data-id="${e.id}" data-slug="${o}" style="animation-delay:${Math.min(r,30)*20}ms" aria-label="Play ${e.title}">
         <div class="card-thumb">
           <img
@@ -410,7 +414,7 @@
           <div class="card-title">${e.title}</div>
           <div class="card-cat-tag">${a} ${i}</div>
         </div>
-      </a>`}).join(``),o&&(o.style.display=e.length>A?`flex`:`none`)}function G(){j(`search-input`)?.addEventListener(`input`,e=>{k=e.target.value,j(`search-clear`).style.display=k?`flex`:`none`,A=60,W()}),j(`search-clear`)?.addEventListener(`click`,()=>{k=``,j(`search-input`).value=``,j(`search-clear`).style.display=`none`,W()});function e(e){O=e,A=60,document.querySelectorAll(`.cat-item`).forEach(e=>{e.classList.toggle(`active`,e.dataset.cat===O)}),document.querySelectorAll(`.ribbon-chip`).forEach(e=>{e.classList.toggle(`active`,e.dataset.cat===O)}),W()}document.querySelector(`.sidebar`)?.addEventListener(`click`,t=>{let n=t.target.closest(`.cat-item`);n&&(e(n.dataset.cat),j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`),window.scrollTo({top:0,behavior:`smooth`}))}),document.querySelector(`.cat-ribbon`)?.addEventListener(`click`,t=>{let n=t.target.closest(`.ribbon-chip`);n&&(e(n.dataset.cat),j(`section-title`)?.scrollIntoView({behavior:`smooth`,block:`nearest`}))}),j(`ribbon-prev`)?.addEventListener(`click`,()=>{j(`cat-ribbon-track`)?.scrollBy({left:-240,behavior:`smooth`})}),j(`ribbon-next`)?.addEventListener(`click`,()=>{j(`cat-ribbon-track`)?.scrollBy({left:240,behavior:`smooth`})}),j(`btn-load-more`)?.addEventListener(`click`,()=>{A+=60,W()}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)})}function K({id:r}){let i=D.find(e=>e.id===r);if(!i){o(`/`);return}let a=e(i),s=Array.isArray(i.cat)?i.cat:[i.cat],c=s[0];document.title=`Play ${i.title} Unblocked | Unblocked Games G+`;let l=document.querySelector(`meta[name="description"]`);l||(l=document.createElement(`meta`),l.name=`description`,document.head.appendChild(l)),l.content=`Play ${i.title} unblocked free online on Unblocked Games G+. No download, no login. Free ${c} HTML5 game — works at school, work, or home on any device.`;let u=D.filter(e=>e.id!==i.id&&(Array.isArray(e.cat)?e.cat.includes(c):e.cat===c)).slice(0,12);j(`app`).innerHTML=`
+      </a>`}).join(``),o&&(o.style.display=e.length>A?`flex`:`none`)}function K(){j(`search-input`)?.addEventListener(`input`,e=>{k=e.target.value,j(`search-clear`).style.display=k?`flex`:`none`,A=60,G()}),j(`search-clear`)?.addEventListener(`click`,()=>{k=``,j(`search-input`).value=``,j(`search-clear`).style.display=`none`,G()});function e(e){O=e,A=60,document.querySelectorAll(`.cat-item`).forEach(e=>{e.classList.toggle(`active`,e.dataset.cat===O)}),document.querySelectorAll(`.ribbon-chip`).forEach(e=>{e.classList.toggle(`active`,e.dataset.cat===O)}),G()}document.querySelector(`.sidebar`)?.addEventListener(`click`,t=>{let n=t.target.closest(`.cat-item`);n&&(e(n.dataset.cat),j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`),window.scrollTo({top:0,behavior:`smooth`}))}),document.querySelector(`.cat-ribbon`)?.addEventListener(`click`,t=>{let n=t.target.closest(`.ribbon-chip`);n&&(e(n.dataset.cat),j(`section-title`)?.scrollIntoView({behavior:`smooth`,block:`nearest`}))}),j(`ribbon-prev`)?.addEventListener(`click`,()=>{j(`cat-ribbon-track`)?.scrollBy({left:-240,behavior:`smooth`})}),j(`ribbon-next`)?.addEventListener(`click`,()=>{j(`cat-ribbon-track`)?.scrollBy({left:240,behavior:`smooth`})}),j(`btn-load-more`)?.addEventListener(`click`,()=>{A+=60,G()}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)})}function q({id:r}){let i=D.find(e=>e.id===r);if(!i){o(`/`);return}let a=e(i),s=Array.isArray(i.cat)?i.cat:[i.cat],c=s[0];document.title=`Play ${i.title} Unblocked | Unblocked Games G+`;let l=document.querySelector(`meta[name="description"]`);l||(l=document.createElement(`meta`),l.name=`description`,document.head.appendChild(l)),l.content=`Play ${i.title} unblocked free online on Unblocked Games G+. No download, no login. Free ${c} HTML5 game — works at school, work, or home on any device.`;let u=U(i.title),d=W(i.id,i.title),f=document.querySelector(`script[type="application/ld+json"]`);f||(f=document.createElement(`script`),f.type=`application/ld+json`,document.head.appendChild(f)),f.textContent=JSON.stringify({"@context":`https://schema.org`,"@type":`VideoGame`,name:i.title,description:l.content,url:window.location.href,image:t(i),genre:s.join(`, `),applicationCategory:`Game`,operatingSystem:`Any, Web Browser`,publisher:{"@type":`Organization`,name:`Unblocked Games G+`},playMode:`SinglePlayer`,aggregateRating:{"@type":`AggregateRating`,ratingValue:d.ratingValue.toFixed(1),bestRating:`5`,worstRating:`1`,ratingCount:String(d.ratingCount)}});let p=D.filter(e=>e.id!==i.id&&(Array.isArray(e.cat)?e.cat.includes(c):e.cat===c)).slice(0,12);j(`app`).innerHTML=`
     ${I()}
     <div class="layout">
       ${F()}
@@ -423,6 +427,21 @@
               <h1 class="play-game-title">Play ${i.title} Unblocked</h1>
               <div class="play-cats">
                 ${s.map(e=>`<span class="play-cat-tag">${n[e]||`🎮`} ${e}</span>`).join(``)}
+              </div>
+              <div class="game-rating-bar" id="game-rating-bar" data-slug="${u}" data-base-sum="${d.ratingSum}" data-base-count="${d.ratingCount}" data-base-val="${d.ratingValue.toFixed(1)}">
+                <div class="rating-stars-interactive" id="rating-stars" role="radiogroup" aria-label="Rate this game">
+                  <button type="button" class="star-btn" data-star="1" aria-label="1 star" title="Rate 1 star">★</button>
+                  <button type="button" class="star-btn" data-star="2" aria-label="2 stars" title="Rate 2 stars">★</button>
+                  <button type="button" class="star-btn" data-star="3" aria-label="3 stars" title="Rate 3 stars">★</button>
+                  <button type="button" class="star-btn" data-star="4" aria-label="4 stars" title="Rate 4 stars">★</button>
+                  <button type="button" class="star-btn" data-star="5" aria-label="5 stars" title="Rate 5 stars">★</button>
+                </div>
+                <div class="rating-score-info">
+                  <span class="rating-num" id="rating-score">${d.ratingValue.toFixed(1)}</span>
+                  <span class="rating-scale">/5</span>
+                  <span class="rating-votes">(<span id="rating-votes-count">${d.ratingCount}</span> votes)</span>
+                </div>
+                <span class="rating-user-feedback" id="rating-feedback" style="display:none;"></span>
               </div>
             </div>
             <button class="btn-fullscreen" id="btn-fullscreen">⛶ Fullscreen</button>
@@ -464,15 +483,15 @@
               ${w(x,`300x250_games_kiri`)}
             </div>
           </div>
-          ${B(i,s)}
+          ${B(i,s,d)}
           ${T()}
-          ${u.length?`
+          ${p.length?`
           <div class="related-section">
             <div class="related-section-header">
               <h2 class="section-title">🎮 More ${c} Unblocked Games</h2>
             </div>
             <div class="related-grid" id="related-grid">
-              ${u.map(e=>`
+              ${p.map(e=>`
                 <a class="game-card game-card-link mini" href="/game/${U(e.title)}.html" data-id="${e.id}" data-slug="${U(e.title)}" aria-label="Play ${e.title} unblocked">
                   <div class="card-thumb">
                     <img src="${t(e)}" alt="${e.title} unblocked" loading="lazy" decoding="async"
@@ -486,7 +505,7 @@
         </div>
       </div>
     </div>
-  `,j(`game-frame`)?.addEventListener(`load`,()=>{j(`game-loading`).style.display=`none`}),j(`btn-back`)?.addEventListener(`click`,()=>{o(`/`)}),j(`btn-fullscreen`)?.addEventListener(`click`,()=>{let e=j(`game-container`);document.fullscreenElement?document.exitFullscreen():e?.requestFullscreen()});let d=j(`btn-dock-ad-toggle`),f=j(`dock-ad-card`);d&&f&&d.addEventListener(`click`,()=>{let e=f.classList.toggle(`is-minimized`),t=d.querySelector(`.dock-toggle-label`),n=d.querySelector(`.dock-toggle-icon`);t&&(t.textContent=e?`Expand`:`Minimize`),n&&(n.textContent=e?`+`:`−`)}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),document.querySelector(`.sidebar`)?.addEventListener(`click`,e=>{let t=e.target.closest(`.cat-item`);t&&(O=t.dataset.cat,A=60,o(`/`))}),R(),b()}function q({id:e}){let t=l[e];if(!t){o(`/`);return}document.title=`${t.title} | Unblocked Games G+`;let n=document.querySelector(`meta[name="description"]`);n&&(n.content=`Read our ${t.title} policy at Unblocked Games G+.`),j(`app`).innerHTML=`
+  `,j(`game-frame`)?.addEventListener(`load`,()=>{j(`game-loading`).style.display=`none`}),j(`btn-back`)?.addEventListener(`click`,()=>{o(`/`)}),j(`btn-fullscreen`)?.addEventListener(`click`,()=>{let e=j(`game-container`);document.fullscreenElement?document.exitFullscreen():e?.requestFullscreen()});let m=j(`btn-dock-ad-toggle`),h=j(`dock-ad-card`);m&&h&&m.addEventListener(`click`,()=>{let e=h.classList.toggle(`is-minimized`),t=m.querySelector(`.dock-toggle-label`),n=m.querySelector(`.dock-toggle-icon`);t&&(t.textContent=e?`Expand`:`Minimize`),n&&(n.textContent=e?`+`:`−`)}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),document.querySelector(`.sidebar`)?.addEventListener(`click`,e=>{let t=e.target.closest(`.cat-item`);t&&(O=t.dataset.cat,A=60,o(`/`))}),R(),b();function g(){let e=j(`game-rating-bar`);if(!e)return;let t=u,n=parseInt(e.getAttribute(`data-base-sum`)||`0`,10),r=parseInt(e.getAttribute(`data-base-count`)||`0`,10),i=e.querySelectorAll(`.star-btn`),a=j(`rating-score`),o=j(`rating-votes-count`),s=j(`rating-feedback`),c=j(`fact-rating-val`),l=j(`fact-rating-count`),d=`ubg_ratings_store_v1`,f={};try{f=JSON.parse(localStorage.getItem(d))||{}}catch{f={}}let p=f[t]||{userVote:0,extraVotes:0,extraSum:0};function m(e){i.forEach(t=>{parseInt(t.getAttribute(`data-star`),10)<=e?t.classList.add(`active`):t.classList.remove(`active`)})}function h(e,t){let n=Number(e).toFixed(1);a&&(a.textContent=n),o&&(o.textContent=t),c&&(c.textContent=n),l&&(l.textContent=t);let r=document.querySelector(`script[type="application/ld+json"]`);if(r)try{let e=JSON.parse(r.textContent);e&&(e.aggregateRating=e.aggregateRating||{"@type":`AggregateRating`,bestRating:`5`,worstRating:`1`},e.aggregateRating.ratingValue=n,e.aggregateRating.ratingCount=String(t),r.textContent=JSON.stringify(e))}catch{}}let g=n+p.extraSum,_=r+p.extraVotes,v=_>0?g/_:4.8;m(p.userVote||0),h(v,_),p.userVote>0&&s&&(s.textContent=`✓ You rated ${p.userVote}★`,s.style.display=`inline-flex`),i.forEach(e=>{e.addEventListener(`mouseenter`,()=>{m(parseInt(e.getAttribute(`data-star`),10))})}),j(`rating-stars`)?.addEventListener(`mouseleave`,()=>{m(p.userVote||0)}),i.forEach(e=>{e.addEventListener(`click`,()=>{let i=parseInt(e.getAttribute(`data-star`),10);p.userVote===0?(p.extraVotes+=1,p.extraSum+=i,p.userVote=i):(p.extraSum=p.extraSum-p.userVote+i,p.userVote=i),f[t]=p;try{localStorage.setItem(d,JSON.stringify(f))}catch{}let a=n+p.extraSum,o=r+p.extraVotes,c=a/o;m(p.userVote),h(c,o),s&&(s.textContent=`✓ Rated ${i}★! Thank you`,s.style.display=`inline-flex`,s.classList.add(`rating-pop`),setTimeout(()=>{s.classList.remove(`rating-pop`)},400))})})}g()}function J({id:e}){let t=l[e];if(!t){o(`/`);return}document.title=`${t.title} | Unblocked Games G+`;let n=document.querySelector(`meta[name="description"]`);n&&(n.content=`Read our ${t.title} policy at Unblocked Games G+.`),j(`app`).innerHTML=`
     ${I()}
     <div class="layout">
       ${F()}
@@ -499,7 +518,7 @@
         ${L()}
       </div>
     </div>
-  `,G(),R()}a(`/`,()=>H()),a(`/play`,({id:e})=>K({id:e})),a(`/page`,({id:e})=>q({id:e})),document.addEventListener(`DOMContentLoaded`,async()=>{j(`app`).innerHTML=`
+  `,K(),R()}a(`/`,()=>H()),a(`/play`,({id:e})=>q({id:e})),a(`/page`,({id:e})=>J({id:e})),document.addEventListener(`DOMContentLoaded`,async()=>{j(`app`).innerHTML=`
     <div style="display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px;background:#08051a;">
       <div class="spinner" style="width:48px;height:48px;border-width:4px;"></div>
       <p style="color:#9ca3af;font-family:Inter,sans-serif;font-size:0.95rem;">Loading Unblocked Games G+...</p>

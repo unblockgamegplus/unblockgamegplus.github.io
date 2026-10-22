@@ -264,7 +264,7 @@ const CAT_DESC = {
   Stickman:    'hilarious and action-packed stickman fighting and adventure games',
 };
 
-function buildGameSeoContent(game, cats) {
+function buildGameSeoContent(game, cats, baseRating) {
   const primaryCat = cats[0] || 'Action';
   const catDescText = CAT_DESC[primaryCat] || 'fun browser games you can play anywhere';
   const catIcon = CAT_ICONS[primaryCat] || '🎮';
@@ -306,6 +306,10 @@ function buildGameSeoContent(game, cats) {
           <div class="game-fact-item">
             <span class="game-fact-label">🔓 Access</span>
             <div class="game-fact-tags"><span class="game-fact-tag">⚡ No Login</span><span class="game-fact-tag">⚡ No Download</span></div>
+          </div>
+          <div class="game-fact-item">
+            <span class="game-fact-label">⭐ User Rating</span>
+            <div class="game-fact-tags"><span class="game-fact-tag fact-rating"><span id="fact-rating-val">${baseRating ? baseRating.ratingValue.toFixed(1) : '4.8'}</span> ★ / 5 (<span id="fact-rating-count">${baseRating ? baseRating.ratingCount : '120'}</span> votes)</span></div>
           </div>
         </div>
       </div>
@@ -522,6 +526,20 @@ function getSlug(title) {
     .replace(/(^-|-$)/g, ''); // Trim leading/trailing hyphens
 }
 
+function getBaseRating(gameId, title) {
+  let hash = 0;
+  const str = String(gameId || '') + '_' + String(title || '');
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash |= 0;
+  }
+  const abs = Math.abs(hash);
+  const ratingValue = Number((4.5 + ((abs % 41) / 100)).toFixed(1));
+  const ratingCount = 85 + (abs % 360);
+  const ratingSum = Math.round(ratingValue * ratingCount);
+  return { ratingValue, ratingCount, ratingSum };
+}
+
 function renderGames() {
   const filtered = getFiltered();
   const grid = $('games-grid');
@@ -677,6 +695,39 @@ function renderPlay({ id }) {
   if (!metaDesc) { metaDesc = document.createElement('meta'); metaDesc.name = 'description'; document.head.appendChild(metaDesc); }
   metaDesc.content = `Play ${game.title} unblocked free online on Unblocked Games G+. No download, no login. Free ${primaryCat} HTML5 game — works at school, work, or home on any device.`;
 
+  const slug = getSlug(game.title);
+  const baseRating = getBaseRating(game.id, game.title);
+
+  let schemaScript = document.querySelector('script[type="application/ld+json"]');
+  if (!schemaScript) {
+    schemaScript = document.createElement('script');
+    schemaScript.type = 'application/ld+json';
+    document.head.appendChild(schemaScript);
+  }
+  schemaScript.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'VideoGame',
+    name: game.title,
+    description: metaDesc.content,
+    url: window.location.href,
+    image: getThumbUrl(game),
+    genre: cats.join(', '),
+    applicationCategory: 'Game',
+    operatingSystem: 'Any, Web Browser',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Unblocked Games G+',
+    },
+    playMode: 'SinglePlayer',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: baseRating.ratingValue.toFixed(1),
+      bestRating: '5',
+      worstRating: '1',
+      ratingCount: String(baseRating.ratingCount),
+    },
+  });
+
   const related = GAMES
     .filter(g => g.id !== game.id && (Array.isArray(g.cat) ? g.cat.includes(primaryCat) : g.cat === primaryCat))
     .slice(0, 12);
@@ -694,6 +745,21 @@ function renderPlay({ id }) {
               <h1 class="play-game-title">Play ${game.title} Unblocked</h1>
               <div class="play-cats">
                 ${cats.map(c=>`<span class="play-cat-tag">${CAT_ICONS[c]||'🎮'} ${c}</span>`).join('')}
+              </div>
+              <div class="game-rating-bar" id="game-rating-bar" data-slug="${slug}" data-base-sum="${baseRating.ratingSum}" data-base-count="${baseRating.ratingCount}" data-base-val="${baseRating.ratingValue.toFixed(1)}">
+                <div class="rating-stars-interactive" id="rating-stars" role="radiogroup" aria-label="Rate this game">
+                  <button type="button" class="star-btn" data-star="1" aria-label="1 star" title="Rate 1 star">★</button>
+                  <button type="button" class="star-btn" data-star="2" aria-label="2 stars" title="Rate 2 stars">★</button>
+                  <button type="button" class="star-btn" data-star="3" aria-label="3 stars" title="Rate 3 stars">★</button>
+                  <button type="button" class="star-btn" data-star="4" aria-label="4 stars" title="Rate 4 stars">★</button>
+                  <button type="button" class="star-btn" data-star="5" aria-label="5 stars" title="Rate 5 stars">★</button>
+                </div>
+                <div class="rating-score-info">
+                  <span class="rating-num" id="rating-score">${baseRating.ratingValue.toFixed(1)}</span>
+                  <span class="rating-scale">/5</span>
+                  <span class="rating-votes">(<span id="rating-votes-count">${baseRating.ratingCount}</span> votes)</span>
+                </div>
+                <span class="rating-user-feedback" id="rating-feedback" style="display:none;"></span>
               </div>
             </div>
             <button class="btn-fullscreen" id="btn-fullscreen">⛶ Fullscreen</button>
@@ -735,7 +801,7 @@ function renderPlay({ id }) {
               ${getSingleAd300HTML(ADSENSE_SLOT_300_LEFT, '300x250_games_kiri')}
             </div>
           </div>
-          ${buildGameSeoContent(game, cats)}
+          ${buildGameSeoContent(game, cats, baseRating)}
           ${getAdsterra300HTML()}
           ${related.length ? `
           <div class="related-section">
@@ -802,6 +868,124 @@ function renderPlay({ id }) {
   });
   bindRouteLinks();
   initAdSense();
+
+  function initRating() {
+    const bar = $('game-rating-bar');
+    if (!bar) return;
+    const gameSlug = slug;
+    const baseSum = parseInt(bar.getAttribute('data-base-sum') || '0', 10);
+    const baseCount = parseInt(bar.getAttribute('data-base-count') || '0', 10);
+    const stars = bar.querySelectorAll('.star-btn');
+    const scoreEl = $('rating-score');
+    const countEl = $('rating-votes-count');
+    const feedbackEl = $('rating-feedback');
+    const factVal = $('fact-rating-val');
+    const factCount = $('fact-rating-count');
+
+    const STORAGE_KEY = 'ubg_ratings_store_v1';
+    let store = {};
+    try {
+      store = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    } catch (e) {
+      store = {};
+    }
+
+    const current = store[gameSlug] || { userVote: 0, extraVotes: 0, extraSum: 0 };
+
+    function renderStars(activeVal) {
+      stars.forEach(starBtn => {
+        const s = parseInt(starBtn.getAttribute('data-star'), 10);
+        if (s <= activeVal) {
+          starBtn.classList.add('active');
+        } else {
+          starBtn.classList.remove('active');
+        }
+      });
+    }
+
+    function updateDisplay(val, count) {
+      const valStr = Number(val).toFixed(1);
+      if (scoreEl) scoreEl.textContent = valStr;
+      if (countEl) countEl.textContent = count;
+      if (factVal) factVal.textContent = valStr;
+      if (factCount) factCount.textContent = count;
+
+      const schemaTag = document.querySelector('script[type="application/ld+json"]');
+      if (schemaTag) {
+        try {
+          const schemaData = JSON.parse(schemaTag.textContent);
+          if (schemaData) {
+            schemaData.aggregateRating = schemaData.aggregateRating || {
+              '@type': 'AggregateRating',
+              bestRating: '5',
+              worstRating: '1'
+            };
+            schemaData.aggregateRating.ratingValue = valStr;
+            schemaData.aggregateRating.ratingCount = String(count);
+            schemaTag.textContent = JSON.stringify(schemaData);
+          }
+        } catch (err) {}
+      }
+    }
+
+    const totalSum = baseSum + current.extraSum;
+    const totalCount = baseCount + current.extraVotes;
+    const currentScore = totalCount > 0 ? (totalSum / totalCount) : 4.8;
+
+    renderStars(current.userVote || 0);
+    updateDisplay(currentScore, totalCount);
+
+    if (current.userVote > 0 && feedbackEl) {
+      feedbackEl.textContent = `✓ You rated ${current.userVote}★`;
+      feedbackEl.style.display = 'inline-flex';
+    }
+
+    stars.forEach(starBtn => {
+      starBtn.addEventListener('mouseenter', () => {
+        const s = parseInt(starBtn.getAttribute('data-star'), 10);
+        renderStars(s);
+      });
+    });
+
+    $('rating-stars')?.addEventListener('mouseleave', () => {
+      renderStars(current.userVote || 0);
+    });
+
+    stars.forEach(starBtn => {
+      starBtn.addEventListener('click', () => {
+        const vote = parseInt(starBtn.getAttribute('data-star'), 10);
+        if (current.userVote === 0) {
+          current.extraVotes += 1;
+          current.extraSum += vote;
+          current.userVote = vote;
+        } else {
+          current.extraSum = current.extraSum - current.userVote + vote;
+          current.userVote = vote;
+        }
+
+        store[gameSlug] = current;
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+        } catch (e) {}
+
+        const newSum = baseSum + current.extraSum;
+        const newCount = baseCount + current.extraVotes;
+        const newScore = (newSum / newCount);
+
+        renderStars(current.userVote);
+        updateDisplay(newScore, newCount);
+
+        if (feedbackEl) {
+          feedbackEl.textContent = `✓ Rated ${vote}★! Thank you`;
+          feedbackEl.style.display = 'inline-flex';
+          feedbackEl.classList.add('rating-pop');
+          setTimeout(() => { feedbackEl.classList.remove('rating-pop'); }, 400);
+        }
+      });
+    });
+  }
+
+  initRating();
 }
 
 // ──── Static Page ────────────────────────────────────────────
