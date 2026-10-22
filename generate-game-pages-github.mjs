@@ -668,6 +668,66 @@ function generateGamePage(game, allGames) {
     .loading-note {
       font-size:0.82rem; color:var(--text3); text-align:center; max-width:320px; line-height:1.5;
     }
+    .dock-ad-card {
+      margin: 14px 0 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(13, 10, 38, 0.6) 100%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 10px 14px 12px;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    .dock-ad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .dock-ad-card.is-minimized .dock-ad-header {
+      margin-bottom: 0;
+    }
+    .dock-ad-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text3);
+      padding: 2px 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+    }
+    .btn-dock-ad-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text2);
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-dock-ad-toggle:hover {
+      background: rgba(139, 92, 246, 0.2);
+      border-color: var(--purple);
+      color: #fff;
+    }
+    .dock-ad-content {
+      width: 100%;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .dock-ad-card.is-minimized .dock-ad-content {
+      display: none;
+    }
+    .dock-ad-content .ad-banner-adsense {
+      margin: 6px 0 4px !important;
+    }
     .hero-row {
       margin: 18px 0 0; display: flex; gap: 20px; align-items: stretch; width: 100%; box-sizing: border-box;
     }
@@ -896,6 +956,19 @@ function generateGamePage(game, allGames) {
         ></iframe>
       </div>
 
+      <div class="dock-ad-card" id="dock-ad-card">
+        <div class="dock-ad-header">
+          <span class="dock-ad-badge">✨ ADVERTISEMENT</span>
+          <button type="button" class="btn-dock-ad-toggle" id="btn-dock-ad-toggle" aria-label="Minimize advertisement">
+            <span class="dock-toggle-icon">−</span>
+            <span class="dock-toggle-label">Minimize</span>
+          </button>
+        </div>
+        <div class="dock-ad-content" id="dock-ad-content">
+          ${getAdSenseHTML(ADSENSE_SLOT_HERO, 'Iklan Responsive unblockedgames - Below Game Frame')}
+        </div>
+      </div>
+
       <div class="hero-row">
         <div class="hero-thumb">
           <img src="${escapeHtml(thumbUrl)}" alt="${safeTitle}" loading="lazy">
@@ -958,13 +1031,25 @@ ${relatedCards}
         window.setTimeout(hideLoading, 3500);
       }
 
-      if (fullscreen && container) {
+        if (fullscreen && container) {
         fullscreen.addEventListener('click', function () {
           if (document.fullscreenElement) {
             document.exitFullscreen();
           } else if (container.requestFullscreen) {
             container.requestFullscreen();
           }
+        });
+      }
+
+      var dockToggle = document.getElementById('btn-dock-ad-toggle');
+      var dockCard = document.getElementById('dock-ad-card');
+      if (dockToggle && dockCard) {
+        dockToggle.addEventListener('click', function () {
+          var isMin = dockCard.classList.toggle('is-minimized');
+          var label = dockToggle.querySelector('.dock-toggle-label');
+          var icon = dockToggle.querySelector('.dock-toggle-icon');
+          if (label) label.textContent = isMin ? 'Expand' : 'Minimize';
+          if (icon) icon.textContent = isMin ? '+' : '−';
         });
       }
 

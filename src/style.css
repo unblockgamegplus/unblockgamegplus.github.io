@@ -1370,6 +1370,68 @@ kbd {
   border-color: rgba(139, 92, 246, 0.5);
 }
 
+/* ── Docked Minimizable Ad Below Game ────────────────────── */
+.dock-ad-card {
+  margin: 14px 0 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(13, 10, 38, 0.6) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 10px 14px 12px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+.dock-ad-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.dock-ad-card.is-minimized .dock-ad-header {
+  margin-bottom: 0;
+}
+.dock-ad-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 2px 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 999px;
+}
+.btn-dock-ad-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-dock-ad-toggle:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: var(--purple);
+  color: #fff;
+}
+.dock-ad-content {
+  width: 100%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.dock-ad-card.is-minimized .dock-ad-content {
+  display: none;
+}
+.dock-ad-content .ad-banner-adsense {
+  margin: 6px 0 4px !important;
+}
+
 /* ── Hero Row with Ad (Deskripsi Singkat + Iklan) ────────── */
 .hero-row {
   margin: 18px 0 0;

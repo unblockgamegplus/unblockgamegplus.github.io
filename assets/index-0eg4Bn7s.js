@@ -439,6 +439,18 @@
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-top-navigation allow-modals"
             ></iframe>
           </div>
+          <div class="dock-ad-card" id="dock-ad-card">
+            <div class="dock-ad-header">
+              <span class="dock-ad-badge">✨ ADVERTISEMENT</span>
+              <button type="button" class="btn-dock-ad-toggle" id="btn-dock-ad-toggle" aria-label="Minimize advertisement">
+                <span class="dock-toggle-icon">−</span>
+                <span class="dock-toggle-label">Minimize</span>
+              </button>
+            </div>
+            <div class="dock-ad-content" id="dock-ad-content">
+              ${y(v,`Iklan Responsive unblockedgames - Below Game Frame`)}
+            </div>
+          </div>
           <div class="hero-row">
             <div class="hero-thumb">
               <img src="${t(i)}" alt="${i.title} unblocked" loading="lazy" decoding="async"
@@ -474,7 +486,7 @@
         </div>
       </div>
     </div>
-  `,j(`game-frame`)?.addEventListener(`load`,()=>{j(`game-loading`).style.display=`none`}),j(`btn-back`)?.addEventListener(`click`,()=>{o(`/`)}),j(`btn-fullscreen`)?.addEventListener(`click`,()=>{let e=j(`game-container`);document.fullscreenElement?document.exitFullscreen():e?.requestFullscreen()}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),document.querySelector(`.sidebar`)?.addEventListener(`click`,e=>{let t=e.target.closest(`.cat-item`);t&&(O=t.dataset.cat,A=60,o(`/`))}),R(),b()}function q({id:e}){let t=l[e];if(!t){o(`/`);return}document.title=`${t.title} | Unblocked Games G+`;let n=document.querySelector(`meta[name="description"]`);n&&(n.content=`Read our ${t.title} policy at Unblocked Games G+.`),j(`app`).innerHTML=`
+  `,j(`game-frame`)?.addEventListener(`load`,()=>{j(`game-loading`).style.display=`none`}),j(`btn-back`)?.addEventListener(`click`,()=>{o(`/`)}),j(`btn-fullscreen`)?.addEventListener(`click`,()=>{let e=j(`game-container`);document.fullscreenElement?document.exitFullscreen():e?.requestFullscreen()});let d=j(`btn-dock-ad-toggle`),f=j(`dock-ad-card`);d&&f&&d.addEventListener(`click`,()=>{let e=f.classList.toggle(`is-minimized`),t=d.querySelector(`.dock-toggle-label`),n=d.querySelector(`.dock-toggle-icon`);t&&(t.textContent=e?`Expand`:`Minimize`),n&&(n.textContent=e?`+`:`−`)}),j(`btn-menu`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.toggle(`open`),j(`sidebar-overlay`)?.classList.toggle(`open`)}),j(`sidebar-close-btn`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),j(`sidebar-overlay`)?.addEventListener(`click`,()=>{j(`sidebar`)?.classList.remove(`open`),j(`sidebar-overlay`)?.classList.remove(`open`)}),document.querySelector(`.sidebar`)?.addEventListener(`click`,e=>{let t=e.target.closest(`.cat-item`);t&&(O=t.dataset.cat,A=60,o(`/`))}),R(),b()}function q({id:e}){let t=l[e];if(!t){o(`/`);return}document.title=`${t.title} | Unblocked Games G+`;let n=document.querySelector(`meta[name="description"]`);n&&(n.content=`Read our ${t.title} policy at Unblocked Games G+.`),j(`app`).innerHTML=`
     ${I()}
     <div class="layout">
       ${F()}

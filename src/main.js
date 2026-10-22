@@ -710,6 +710,18 @@ function renderPlay({ id }) {
               sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-pointer-lock allow-top-navigation allow-modals"
             ></iframe>
           </div>
+          <div class="dock-ad-card" id="dock-ad-card">
+            <div class="dock-ad-header">
+              <span class="dock-ad-badge">✨ ADVERTISEMENT</span>
+              <button type="button" class="btn-dock-ad-toggle" id="btn-dock-ad-toggle" aria-label="Minimize advertisement">
+                <span class="dock-toggle-icon">−</span>
+                <span class="dock-toggle-label">Minimize</span>
+              </button>
+            </div>
+            <div class="dock-ad-content" id="dock-ad-content">
+              ${getAdSenseHTML(ADSENSE_SLOT_HERO, 'Iklan Responsive unblockedgames - Below Game Frame')}
+            </div>
+          </div>
           <div class="hero-row">
             <div class="hero-thumb">
               <img src="${getThumbUrl(game)}" alt="${game.title} unblocked" loading="lazy" decoding="async"
@@ -756,6 +768,19 @@ function renderPlay({ id }) {
     const c = $('game-container');
     document.fullscreenElement ? document.exitFullscreen() : c?.requestFullscreen();
   });
+
+  const dockToggle = $('btn-dock-ad-toggle');
+  const dockCard = $('dock-ad-card');
+  if (dockToggle && dockCard) {
+    dockToggle.addEventListener('click', () => {
+      const isMin = dockCard.classList.toggle('is-minimized');
+      const label = dockToggle.querySelector('.dock-toggle-label');
+      const icon = dockToggle.querySelector('.dock-toggle-icon');
+      if (label) label.textContent = isMin ? 'Expand' : 'Minimize';
+      if (icon) icon.textContent = isMin ? '+' : '−';
+    });
+  }
+
   $('btn-menu')?.addEventListener('click', () => {
     $('sidebar')?.classList.toggle('open');
     $('sidebar-overlay')?.classList.toggle('open');
