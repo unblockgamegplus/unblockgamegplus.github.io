@@ -89,7 +89,7 @@
         <\/script>
       </div>
     </div>
-  </div>`}function w(e,t=`300x250_ad`){return`
+  </div>`}function w(e=v,t=`Responsive_336x280_ad`){return`
   <div class="ad-box-wrapper">
     <span class="ad-subtle-badge">✨ ADVERTISEMENT</span>
     <div class="ad-container-300">
@@ -97,9 +97,11 @@
            crossorigin="anonymous"><\/script>
       <!-- ${t} -->
       <ins class="adsbygoogle"
-           style="display:inline-block;width:300px;height:250px"
+           style="display:block;width:100%;max-width:336px;min-height:250px;margin:0 auto;"
            data-ad-client="${g}"
-           data-ad-slot="${e}"></ins>
+           data-ad-slot="${e}"
+           data-ad-format="rectangle"
+           data-full-width-responsive="true"></ins>
       <script>
            (adsbygoogle = window.adsbygoogle || []).push({});
       <\/script>
@@ -221,7 +223,7 @@
         </div>
       </div>
       <div class="about-card-ad">
-        ${w(S,`300x250_games_kanan`)}
+        ${w(_,`Responsive_336x280_About`)}
       </div>
     </div>
 
@@ -480,7 +482,7 @@
               </div>
             </div>
             <div class="hero-ad-slot">
-              ${w(x,`300x250_games_kiri`)}
+              ${w(v,`Responsive_336x280_Hero`)}
             </div>
           </div>
           ${B(i,s,d)}

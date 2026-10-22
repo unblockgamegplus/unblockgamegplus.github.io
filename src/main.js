@@ -71,7 +71,7 @@ function getAdsDuoRowHTML() {
   </div>`;
 }
 
-function getSingleAd300HTML(slot, comment = '300x250_ad') {
+function getSingleAd300HTML(slot = ADSENSE_SLOT_HERO, comment = 'Responsive_336x280_ad') {
   return `
   <div class="ad-box-wrapper">
     <span class="ad-subtle-badge">✨ ADVERTISEMENT</span>
@@ -80,9 +80,11 @@ function getSingleAd300HTML(slot, comment = '300x250_ad') {
            crossorigin="anonymous"></script>
       <!-- ${comment} -->
       <ins class="adsbygoogle"
-           style="display:inline-block;width:300px;height:250px"
+           style="display:block;width:100%;max-width:336px;min-height:250px;margin:0 auto;"
            data-ad-client="${ADSENSE_CLIENT}"
-           data-ad-slot="${slot}"></ins>
+           data-ad-slot="${slot}"
+           data-ad-format="rectangle"
+           data-full-width-responsive="true"></ins>
       <script>
            (adsbygoogle = window.adsbygoogle || []).push({});
       </script>
@@ -314,7 +316,7 @@ function buildGameSeoContent(game, cats, baseRating) {
         </div>
       </div>
       <div class="about-card-ad">
-        ${getSingleAd300HTML(ADSENSE_SLOT_300_RIGHT, '300x250_games_kanan')}
+        ${getSingleAd300HTML(ADSENSE_SLOT_TOP, 'Responsive_336x280_About')}
       </div>
     </div>
 
@@ -798,7 +800,7 @@ function renderPlay({ id }) {
               </div>
             </div>
             <div class="hero-ad-slot">
-              ${getSingleAd300HTML(ADSENSE_SLOT_300_LEFT, '300x250_games_kiri')}
+              ${getSingleAd300HTML(ADSENSE_SLOT_HERO, 'Responsive_336x280_Hero')}
             </div>
           </div>
           ${buildGameSeoContent(game, cats, baseRating)}

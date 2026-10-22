@@ -191,7 +191,7 @@ function getAdsDuoRowHTML() {
       </div>`;
 }
 
-function getSingleAd300HTML(slot, comment = '300x250_ad') {
+function getSingleAd300HTML(slot = ADSENSE_SLOT_HERO, comment = 'Responsive_336x280_ad') {
   return `
       <div class="ad-box-wrapper">
         <span class="ad-subtle-badge">✨ ADVERTISEMENT</span>
@@ -200,9 +200,11 @@ function getSingleAd300HTML(slot, comment = '300x250_ad') {
                crossorigin="anonymous"></script>
           <!-- ${comment} -->
           <ins class="adsbygoogle"
-               style="display:inline-block;width:300px;height:250px"
+               style="display:block;width:100%;max-width:336px;min-height:250px;margin:0 auto;"
                data-ad-client="ca-pub-8687742238485131"
-               data-ad-slot="${slot}"></ins>
+               data-ad-slot="${slot}"
+               data-ad-format="rectangle"
+               data-full-width-responsive="true"></ins>
           <script>
                (adsbygoogle = window.adsbygoogle || []).push({});
           </script>
@@ -304,7 +306,7 @@ function buildGameSeoContent(game, cats, baseRating) {
         </div>
       </div>
       <div class="about-card-ad">
-        ${getSingleAd300HTML(ADSENSE_SLOT_300_RIGHT, '300x250_games_kanan')}
+        ${getSingleAd300HTML(ADSENSE_SLOT_TOP, 'Responsive_336x280_games_about')}
       </div>
     </div>
 
@@ -674,8 +676,8 @@ function generateGamePage(game, allGames) {
       display:flex; justify-content:center; align-items:center; gap:20px; flex-wrap:wrap; width:100%; margin:0 auto; box-sizing:border-box;
     }
     .ad-container-300 {
-      width:300px; min-height:250px; display:flex; justify-content:center; align-items:center; background:rgba(8,5,26,0.7);
-      border:1px dashed rgba(139,92,246,0.25); border-radius:12px; padding:4px; box-shadow:0 4px 20px rgba(0,0,0,0.35); overflow:hidden; box-sizing:border-box;
+      width:100%; max-width:336px; min-height:250px; display:flex; justify-content:center; align-items:center; background:rgba(8,5,26,0.7);
+      border:1px dashed rgba(139,92,246,0.25); border-radius:12px; padding:0; box-shadow:0 4px 20px rgba(0,0,0,0.35); overflow:hidden; box-sizing:border-box;
     }
     .game-container {
       position:relative; width:100%; background:#000; border-radius:var(--radius-lg); overflow:hidden; border:1px solid var(--border);
@@ -772,14 +774,18 @@ function generateGamePage(game, allGames) {
     .hero-copy h2 { margin: 0 0 8px; font-size: 1.12rem; font-weight: 700; color: var(--text); }
     .hero-copy p { margin: 0; color: var(--text2); line-height: 1.65; font-size: 0.92rem; }
     .hero-ad-slot {
-      flex: 0 0 300px; width: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      flex: 0 0 340px; width: 340px; max-width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
     .about-card-split {
       display: flex; gap: 24px; align-items: flex-start; justify-content: space-between; box-sizing: border-box;
     }
     .about-card-content { flex: 1; min-width: 0; }
     .about-card-ad {
-      flex: 0 0 300px; width: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; align-self: center;
+      flex: 0 0 340px; width: 340px; max-width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; align-self: center;
+    }
+    ins.adsbygoogle[data-ad-status="unfilled"],
+    .ad-box-wrapper:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+      display: none !important;
     }
     .ad-box-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
     .ad-subtle-badge {
@@ -1049,7 +1055,7 @@ function generateGamePage(game, allGames) {
           </div>
         </div>
         <div class="hero-ad-slot">
-          ${getSingleAd300HTML(ADSENSE_SLOT_300_LEFT, '300x250_games_kiri')}
+          ${getSingleAd300HTML(ADSENSE_SLOT_HERO, 'Responsive_336x280_Hero')}
         </div>
       </div>
 

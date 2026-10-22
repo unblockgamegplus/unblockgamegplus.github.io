@@ -1352,7 +1352,8 @@ kbd {
   box-sizing: border-box;
 }
 .ad-container-300 {
-  width: 300px;
+  width: 100%;
+  max-width: 336px;
   min-height: 250px;
   display: flex;
   justify-content: center;
@@ -1360,7 +1361,7 @@ kbd {
   background: rgba(8, 5, 26, 0.7);
   border: 1px dashed rgba(139, 92, 246, 0.25);
   border-radius: 12px;
-  padding: 4px;
+  padding: 0;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   box-sizing: border-box;
@@ -1368,6 +1369,10 @@ kbd {
 }
 .ad-container-300:hover {
   border-color: rgba(139, 92, 246, 0.5);
+}
+ins.adsbygoogle[data-ad-status="unfilled"],
+.ad-box-wrapper:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+  display: none !important;
 }
 
 /* ── Docked Minimizable Ad Below Game ────────────────────── */
@@ -1482,8 +1487,9 @@ kbd {
   font-size: 0.92rem;
 }
 .hero-ad-slot {
-  flex: 0 0 300px;
-  width: 300px;
+  flex: 0 0 340px;
+  width: 340px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1503,8 +1509,9 @@ kbd {
   min-width: 0;
 }
 .about-card-ad {
-  flex: 0 0 300px;
-  width: 300px;
+  flex: 0 0 340px;
+  width: 340px;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
