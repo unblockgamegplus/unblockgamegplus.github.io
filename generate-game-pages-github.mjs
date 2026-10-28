@@ -256,6 +256,25 @@ function getAdsterra300HTML() {
       </div>`;
 }
 
+function getAdsterra728HTML() {
+  return `
+      <div class="ad-adsterra-728-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:24px auto;text-align:center;width:100%;box-sizing:border-box;">
+        <span class="ad-subtle-badge" style="margin-bottom:8px;">✨ SPONSORED</span>
+        <div class="ad-container-728" style="width:100%;max-width:728px;min-height:90px;margin:0 auto;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+          <script>
+            atOptions = {
+              'key' : '4b03159602cba0243869c415124b923e',
+              'format' : 'iframe',
+              'height' : 90,
+              'width' : 728,
+              'params' : {}
+            };
+          </script>
+          <script src="https://grop.net/22/4b03159602cba0243869c415124b923e"></script>
+        </div>
+      </div>`;
+}
+
 function getCategoryCount(categoryId) {
   if (categoryId === 'all') return games.length;
   return games.filter(game => {
@@ -334,6 +353,8 @@ function buildGameSeoContent(game, cats, baseRating) {
         ${getSingleAd300HTML(ADSENSE_SLOT_TOP, 'Responsive_336x280_games_about')}
       </div>
     </div>
+
+    ${getAdsterra728HTML()}
 
     <div class="game-seo-card">
       <div class="game-seo-card-header">
@@ -485,6 +506,7 @@ function generateAllGamesIndex(allGames) {
         <span class="install-text">Install App</span>
       </button>
     </div>
+    ${getAdsterra728HTML()}
     <ul>
 ${items}
     </ul>

@@ -122,6 +122,16 @@ function getAdsterra300HTML() {
   </div>`;
 }
 
+function getAdsterra728HTML() {
+  return `
+  <div class="ad-adsterra-728-wrap" style="display:flex;flex-direction:column;align-items:center;justify-content:center;margin:20px auto;text-align:center;width:100%;box-sizing:border-box;">
+    <span class="ad-subtle-badge" style="margin-bottom:8px;">✨ SPONSORED</span>
+    <div class="ad-container-728" style="width:100%;max-width:728px;min-height:90px;margin:0 auto;display:flex;justify-content:center;align-items:center;overflow:hidden;">
+      <iframe srcdoc="&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;style&gt;body{margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;align-items:center;background:transparent;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;script&gt;atOptions={'key':'4b03159602cba0243869c415124b923e','format':'iframe','height':90,'width':728,'params':{}};&lt;/script&gt;&lt;script src=&quot;https://grop.net/22/4b03159602cba0243869c415124b923e&quot;&gt;&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;" style="width:728px;height:90px;max-width:100%;border:none;overflow:hidden;" scrolling="no"></iframe>
+    </div>
+  </div>`;
+}
+
 // ──── Category Ribbon (Horizontal Top Navigation Bar) ──────
 function buildCategoryRibbon() {
   return `
@@ -340,6 +350,8 @@ function buildGameSeoContent(game, cats, baseRating) {
       </div>
     </div>
 
+    ${getAdsterra728HTML()}
+
     <!-- How to Play -->
     <div class="game-seo-card">
       <div class="game-seo-card-header">
@@ -504,6 +516,7 @@ function renderHome() {
       <div class="main-content">
         ${getAdSenseHTML(ADSENSE_SLOT_TOP, 'Iklan Responsive unblockedgames')}
         ${buildCategoryRibbon()}
+        ${getAdsterra728HTML()}
         <div class="section-header">
           <h1 class="section-title" id="section-title">
             ${currentCategory === 'all' ? '🔥 All Games' : (() => { const c = CATEGORIES.find(x => x.id === currentCategory); return c ? `${c.emoji} ${c.label}` : currentCategory; })()}
